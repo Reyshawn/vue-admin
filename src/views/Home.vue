@@ -1,19 +1,23 @@
 <template>
   <div class="home">
     <button class="button" @click="logout">logout</button>
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="container">
+      <sidebar />
+      <mainContent />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from '@/components/HelloWorld.vue'
+import Sidebar from '@/components/Sidebar'
+import MainContent from '@/components/MainContent'
 import Cookies from 'js-cookie'
 
 export default {
   name: 'home',
   components: {
-    HelloWorld
+    Sidebar,
+    MainContent
   },
   methods: {
     logout () {
@@ -23,3 +27,15 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.container {
+  display: grid;
+  grid-template-columns: 200px 100%;
+  grid-column-gap: 1em;
+  color: #fff1c1;
+  height: 100vh;
+  max-width: 100%;
+  margin: 0;
+}
+</style>
