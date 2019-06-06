@@ -33,12 +33,15 @@ export default {
       'users'
     ])
   },
+  created() {
+    this.$store.dispatch('getUsers')
+  },
   methods: {
     login () {
-      if (this.users[this.email] === this.password) {
+      if (this.users[this.email] === this.token) {
         let email = this.email
-        let password = this.password
-        Cookies.set('user', { email: password }, { expires: 7 })
+        let token = this.token
+        Cookies.set('user', { email: token }, { expires: 7 })
         this.$router.push('/')
       } else {
         alert('Login error')

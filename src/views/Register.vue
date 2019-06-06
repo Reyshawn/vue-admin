@@ -37,8 +37,9 @@ export default {
     ...mapActions(['register']),
     submitForm () {
       if (this.username && this.email && this.password) {
-        this.register({ email: this.email, password: this.password })
-        this.$router.push('/login')
+        this.$store.dispatch('register', { username: this.username, email: this.email, password: this.password }).then(() => {
+          this.$router.push('/login')
+        })
       } else {
         alert('Error!!!!')
       }
