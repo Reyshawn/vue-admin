@@ -33,7 +33,7 @@ export default {
       'users'
     ])
   },
-  created() {
+  created () {
     this.$store.dispatch('getUsers')
   },
   methods: {

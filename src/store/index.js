@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    users: {}
+    users: []
   },
   mutations: {
     UPDATE_USERS (state, payload) {
@@ -27,12 +27,9 @@ export default new Vuex.Store({
       })
     },
     register ({ commit }, data) {
-      console.log(data)
-      data = JSON.stringify(data)
-      axios.post('http://localhost:3000/api/users', data, {
-        headers: { 'ContentType': 'application/json' }
-      }).then((response) => {
-        commit('ADD_USER', data)
+      axios.post('http://localhost:3000/api/users', data)
+        .then((response) => {
+          commit('ADD_USER', response.data)
       })
     }
   }
