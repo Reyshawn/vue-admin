@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import { componentRoutes } from '@/router'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    users: []
+    users: [],
+    componentRoutes
   },
   mutations: {
     UPDATE_USERS (state, payload) {
@@ -17,7 +19,8 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    users: state => state.users
+    users: state => state.users,
+    componentRoutes: state => state.componentRoutes
   },
   actions: {
     getUsers ({ commit }) {
@@ -30,7 +33,7 @@ export default new Vuex.Store({
       axios.post('http://localhost:3000/api/users', data)
         .then((response) => {
           commit('ADD_USER', response.data)
-      })
+        })
     }
   }
 })
