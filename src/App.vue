@@ -4,12 +4,12 @@
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '~bulma/css/bulma.css';
 
 #app {
   font-family: 'Avenir next', sans-serif;
   height: 100vh;
-  width: 100%;
+  max-width: 100%;
 }
 </style>

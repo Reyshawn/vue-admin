@@ -20,8 +20,8 @@ export const componentRoutes = [
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: () => import('@/views/Home.vue'),
+    name: 'layout',
+    component: () => import('@/views/Layout'),
     beforeEnter: (to, from, next) => {
       if (Cookies.get('user')) {
         next()

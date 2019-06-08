@@ -1,6 +1,7 @@
 <template>
   <div class="nav-bar">
     <div class="nav-list">
+      <slot></slot>
       <div class="nav-item"><a @click="logout">Logout</a></div>
       <div class="nav-item"><router-link to="/about">About</router-link></div>
       <div class="nav-item"><router-link to="/">Home</router-link></div>
@@ -25,7 +26,6 @@ export default {
 <style scoped>
 .nav-bar {
   height: 50px;
-  width: 100%;
   background-color: #fe5f55;
   display: flex;
   flex-direction: column;

@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="sidebar-wrapper"
-    :class="{ sidebarToggle: isClosed}"
-  >
-    <div class="sidebar-toggle" @click="isClosed=!isClosed"><span>Toggle</span></div>
+  <nav id="sidebar">
     <ul>
       <li><router-link to="/dashboard">Dashboard</router-link></li>
       <li>
@@ -21,7 +17,7 @@
       <li><a>Other item</a></li>
       <li><a>Other item</a></li>
     </ul>
-  </div>
+  </nav>
 </template>
 
 <script>
@@ -31,9 +27,11 @@ export default {
   name: 'sidebar',
   data () {
     return {
-      active: false,
-      isClosed: false
+      active: false
     }
+  },
+  props: {
+    closed: Boolean
   },
   computed: {
     ...mapGetters([
@@ -44,30 +42,26 @@ export default {
 </script>
 
 <style scoped>
-.sidebar-wrapper {
+#sidebar {
   background-color: #293462;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.sidebar-wrapper.is-closed {
-  width: 10px;
-}
-
-.sidebar-wrapper > ul {
+#sidebar > ul {
   margin-top: 40px;
 }
 
-.sidebar-wrapper li {
+#sidebar li {
   margin: 10px auto;
 }
 
-.sidebar-wrapper a {
+#sidebar a {
   color: #fff1c1;
 }
 
-.sidebar-wrapper a:hover {
+#sidebar a:hover {
   border-bottom: 1px solid #fff1c1;
 }
 
