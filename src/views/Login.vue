@@ -25,7 +25,8 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      token: ''
     }
   },
   computed: {
@@ -38,8 +39,11 @@ export default {
   },
   methods: {
     login () {
-      if (this.users[this.email] === this.token) {
-        let email = this.email
+      this.token = this.password
+      let findUser = this.users.find(user =>
+        user.email === this.email
+      )
+      if (findUser && findUser.token === this.token) {
         let token = this.token
         Cookies.set('user', { email: token }, { expires: 7 })
         this.$router.push('/')

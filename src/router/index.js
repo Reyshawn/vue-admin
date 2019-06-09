@@ -57,8 +57,6 @@ const routes = [
   }
 ]
 
-console.log(routes[0].children)
-
 const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
