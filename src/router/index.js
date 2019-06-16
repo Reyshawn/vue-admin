@@ -21,6 +21,13 @@ const routes = [
     path: '/',
     name: 'layout',
     component: () => import('@/views/Layout'),
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next()
+      } else {
+        next('/login')
+      }
+    },
     children: [
       {
         path: '/about',
@@ -34,6 +41,13 @@ const routes = [
     path: '/login',
     name: 'login',
     component: () => import('@/views/Login'),
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next('/')
+      } else {
+        next()
+      }
+    },
   },
   {
     path: '/register',

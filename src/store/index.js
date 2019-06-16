@@ -7,18 +7,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    isLoggedIn: false,
     errorMessages: [],
     componentRoutes
   },
   mutations: {
-    CHANGE_STATE (state, val) {
-      state.isLoggedIn = val
-    }
 
   },
   getters: {
-    isLoggedIn: state => state.isLoggedIn,
     errorMessages: state => state.errorMessages,
     componentRoutes: state => state.componentRoutes
   },
@@ -28,7 +23,7 @@ export default new Vuex.Store({
         axios.post('/auth/login', data)
           .then((response) => {
             if (response.status === 200) {
-              commit('CHANGE_STATE', true)
+              localStorage.setItem('access_token', response.data.token)
               resolve(response.data)
             }
           })
@@ -43,7 +38,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         axios.get('/auth/logout')
         .then(response => {
-          commit('CHANGE_STATE', false)
+          localStorage.removeItem('access_token')
           resolve(response.data)
         })
         .catch(err => {

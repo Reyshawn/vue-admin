@@ -49,6 +49,7 @@ export default {
         }
         this.$store.dispatch('login', info).then(response => {
           console.log('login:', response)
+          this.$router.push('/')
         })
       }
     }
