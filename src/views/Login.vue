@@ -47,7 +47,7 @@ export default {
           email: this.email,
           password: this.password
         }
-        axios.post('/api/login', data)
+        axios.post('/auth/login', data)
           .then((response) => {
             if (response.status === 200) {
               this.$router.push('/')

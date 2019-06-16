@@ -52,13 +52,13 @@ export default {
   methods: {
     register () {
       if (!this.username || !this.email || !this.password || !this.password_2) {
-        this.errors.push({msg: 'Please fill in all fields.'})
+        this.errors.push({ msg: 'Please fill in all fields.' })
       }
       if (this.password !== this.password_2) {
-        this.errors.push({msg: 'Password do not match'})
+        this.errors.push({ msg: 'Password do not match' })
       }
-      if ( this.password.length < 6 ) {
-        this.errors.push({msg: 'Password should be at least 6 characters'})
+      if (this.password.length < 6) {
+        this.errors.push({ msg: 'Password should be at least 6 characters' })
       }
       if (this.errors.length === 0) {
         let data = {
@@ -66,7 +66,7 @@ export default {
           email: this.email,
           password: this.password
         }
-        axios.post('/api/register', data)
+        axios.post('/auth/register', data)
           .then((response) => {
             console.log(response)
           })
