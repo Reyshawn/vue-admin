@@ -1,15 +1,6 @@
 <template>
   <div class="register-container columns is-vcentered is-centered">
     <div class="column is-3">
-      <div v-if="errors.length!==0" class="message is-warning">
-        <div class="message-header">
-          <p>Warning</p>
-          <button class="delete" aria-label="delete"></button>
-        </div>
-        <div class="message-body">
-          <p v-for="error in errors" :key="error.msg">{{error.msg}}</p>
-        </div>
-      </div>
       <h1 class="title">Register Form</h1>
       <form @submit.prevent="register">
         <div class="field">
@@ -36,8 +27,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'register',
   data () {
@@ -45,22 +34,21 @@ export default {
       username: '',
       email: '',
       password: '',
-      password_2: '',
-      errors: []
+      password_2: ''
     }
   },
   methods: {
     register () {
       if (!this.username || !this.email || !this.password || !this.password_2) {
-        this.errors.push({ msg: 'Please fill in all fields.' })
+        this.$store.commit('ADD_ERROR_MSG', { msg: 'Please fill in all fields.' })
       }
       if (this.password !== this.password_2) {
-        this.errors.push({ msg: 'Password do not match' })
+        this.$store.commit('ADD_ERROR_MSG', { msg: 'Password do not match' })
       }
       if (this.password.length < 6) {
-        this.errors.push({ msg: 'Password should be at least 6 characters' })
+        this.$store.commit('ADD_ERROR_MSG', { msg: 'Password should be at least 6 characters' })
       }
-      if (this.errors.length === 0) {
+      if (this.$store.getters.errorMessages.length === 0) {
         let info = {
           name: this.username,
           email: this.email,

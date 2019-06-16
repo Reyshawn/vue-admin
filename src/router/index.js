@@ -47,7 +47,7 @@ const routes = [
       } else {
         next()
       }
-    },
+    }
   },
   {
     path: '/register',

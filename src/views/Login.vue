@@ -1,14 +1,5 @@
 <template>
   <div class="login-container columns is-vcentered is-centered">
-    <div v-if="errors.length!==0" class="message is-warning">
-        <div class="message-header">
-          <p>Warning</p>
-          <button class="delete" aria-label="delete"></button>
-        </div>
-        <div class="message-body">
-          <p v-for="error in errors" :key="error.msg">{{error.msg}}</p>
-        </div>
-      </div>
     <div class="column is-3">
       <h1 class="title">Login Form</h1>
       <form @submit.prevent="login">
@@ -26,23 +17,20 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'login',
   data () {
     return {
       email: '',
-      password: '',
-      errors: []
+      password: ''
     }
   },
   methods: {
     login () {
       if (!this.email || !this.password) {
-        this.errors.push({ msg: 'Please fill in all fields.' })
+        this.$store.commit('ADD_ERROR_MSG', { msg: 'Please fill in all fields.' })
       }
-      if (this.errors.length === 0) {
+      if (this.$store.getters.errorMessages.length === 0) {
         let info = {
           email: this.email,
           password: this.password

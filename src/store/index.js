@@ -11,14 +11,22 @@ export default new Vuex.Store({
     componentRoutes
   },
   mutations: {
+    ADD_ERROR_MSG (state, payload) {
+      let l = state.errorMessages.length
+      payload.id = l ? state.errorMessages[l-1].id+1 : 0
+      state.errorMessages.push(payload)
+    },
 
+    DELETE_ERROR_MSG (state, id) {
+      state.errorMessages = state.errorMessages.filter(err => err.id !== id)
+    }
   },
   getters: {
     errorMessages: state => state.errorMessages,
     componentRoutes: state => state.componentRoutes
   },
   actions: {
-    login({ commit }, data) {
+    login ({ commit }, data) {
       return new Promise((resolve, reject) => {
         axios.post('/auth/login', data)
           .then((response) => {
@@ -28,34 +36,34 @@ export default new Vuex.Store({
             }
           })
           .catch(err => {
-            this.errors.push({ msg: err.response.data })
+            commit('ADD_ERROR_MSG', { msg: err.response.data })
             reject(err.response)
-        })
+          })
       })
     },
 
-    logout({ commit }) {
+    logout ({ commit }) {
       return new Promise((resolve, reject) => {
         axios.get('/auth/logout')
-        .then(response => {
-          localStorage.removeItem('access_token')
-          resolve(response.data)
-        })
-        .catch(err => {
-          console.log(err)
-          reject(err)
-        })
+          .then(response => {
+            localStorage.removeItem('access_token')
+            resolve(response.data)
+          })
+          .catch(err => {
+            console.log(err)
+            reject(err)
+          })
       })
     },
 
-    register({ commit }, data) {
+    register ({ commit }, data) {
       return new Promise((resolve, reject) => {
         axios.post('/auth/register', data)
           .then((response) => {
             resolve(response.data)
           })
           .catch(err => {
-            this.errors.push({ msg: err.response.data })
+            commit('ADD_ERROR_MSG', { msg: err.response.data })
             reject(err)
           })
       })
