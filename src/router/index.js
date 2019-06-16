@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Cookies from 'js-cookie'
 
 Vue.use(Router)
 
@@ -22,13 +21,6 @@ const routes = [
     path: '/',
     name: 'layout',
     component: () => import('@/views/Layout'),
-    beforeEnter: (to, from, next) => {
-      if (Cookies.get('user')) {
-        next()
-      } else {
-        next('/login')
-      }
-    },
     children: [
       {
         path: '/about',
@@ -42,13 +34,6 @@ const routes = [
     path: '/login',
     name: 'login',
     component: () => import('@/views/Login'),
-    beforeEnter: (to, from, next) => {
-      if (Cookies.get('user')) {
-        next('/')
-      } else {
-        next()
-      }
-    }
   },
   {
     path: '/register',
