@@ -10,14 +10,16 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie'
+import axios from 'axios'
 
 export default {
   name: 'NavBar',
   methods: {
     logout () {
-      Cookies.remove('user')
-      this.$router.push('/login')
+      this.$store.dispatch('logout')
+        .then(response => {
+          console.log(response)
+        })
     }
   }
 }

@@ -43,20 +43,13 @@ export default {
         this.errors.push({ msg: 'Please fill in all fields.' })
       }
       if (this.errors.length === 0) {
-        let data = {
+        let info = {
           email: this.email,
           password: this.password
         }
-        axios.post('/auth/login', data)
-          .then((response) => {
-            if (response.status === 200) {
-              this.$router.push('/')
-            }
-          })
-          .catch(err => {
-            console.log(err.response)
-            this.errors.push({ msg: err.response.data })
-          })
+        this.$store.dispatch('login', info).then(response => {
+          console.log('login:', response)
+        })
       }
     }
   }

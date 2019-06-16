@@ -61,18 +61,15 @@ export default {
         this.errors.push({ msg: 'Password should be at least 6 characters' })
       }
       if (this.errors.length === 0) {
-        let data = {
+        let info = {
           name: this.username,
           email: this.email,
           password: this.password
         }
-        axios.post('/auth/register', data)
-          .then((response) => {
+
+        this.$store.dispatch('register', info)
+          .then(response => {
             console.log(response)
-          })
-          .catch(err => {
-            console.log(err.response)
-            this.errors.push({ msg: err.response.data })
           })
       }
     }
