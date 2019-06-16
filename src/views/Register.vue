@@ -70,6 +70,10 @@ export default {
           .then((response) => {
             console.log(response)
           })
+          .catch(err => {
+            console.log(err.response)
+            this.errors.push({ msg: err.response.data })
+          })
       }
     }
   }

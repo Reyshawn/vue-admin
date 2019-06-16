@@ -54,8 +54,8 @@ export default {
             }
           })
           .catch(err => {
-            console.log(err)
-            this.errors.push({ msg: 'Failed, please try later.' })
+            console.log(err.response)
+            this.errors.push({ msg: err.response.data })
           })
       }
     }
