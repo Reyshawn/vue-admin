@@ -1,21 +1,44 @@
 <template>
   <nav id="sidebar">
     <ul>
-      <li><router-link to="/dashboard">Dashboard</router-link></li>
-      <li>
-        <a @click="active = !active">Components</a>
-        <div class="sidebar-submenu" v-if="active">
-          <ul>
-            <li v-for="route in componentRoutes" :key=route.path>
-              <router-link :to="route.path">{{ route.name }}</router-link>
-            </li>
-          </ul>
+      <div class="menu-item">
+        <span class="icon">
+          <i class="fas fa-tachometer-alt"></i>
+        </span>
+        <router-link to="/dashboard" class="menu-title">Dashboard</router-link>
+      </div>
+      <div class="menu-item"  @click="active = !active">
+        <span class="icon">
+          <i class="fas fa-angle-double-right"></i>
+        </span>
+        <a class="menu-title">Components</a>
+      </div>
+      <div class="sidemenu" v-if="active">
+        <div class="menu-item" v-for="route in componentRoutes" :key=route.path>
+          <span class="icon">
+            <i class="fas fa-angle-double-right"></i>
+          </span>
+          <router-link :to="route.path" class="menu-title">{{ route.name }}</router-link>
         </div>
-      </li>
-      <li><a>Other item</a></li>
-      <li><a>Other item</a></li>
-      <li><a>Other item</a></li>
-      <li><a>Other item</a></li>
+      </div>
+      <div class="menu-item">
+        <span class="icon">
+          <i class="fas fa-cubes"></i>
+        </span>
+        <a class="menu-title">Other item</a>
+      </div>
+      <div class="menu-item">
+        <span class="icon">
+          <i class="fas fa-cubes"></i>
+        </span>
+        <a class="menu-title">Other item</a>
+      </div>
+      <div class="menu-item">
+        <span class="icon">
+          <i class="fas fa-cubes"></i>
+        </span>
+        <a class="menu-title">Other item</a>
+      </div>
     </ul>
   </nav>
 </template>
@@ -46,28 +69,28 @@ export default {
   background-color: #293462;
   display: flex;
   flex-direction: column;
+  position: sticky;
+  top: 0;
+  overflow: scroll;
+}
+
+.menu-item {
+  margin: 0;
+  height: 50px;
+  display: flex;
   align-items: center;
 }
 
-#sidebar > ul {
-  margin-top: 40px;
+.menu-item:hover {
+  background-color: #242e58;
 }
 
-#sidebar li {
-  margin: 10px auto;
+.menu-item > span.icon {
+  margin: 0 16px 0 16px;
 }
 
 #sidebar a {
   color: #fff1c1;
 }
 
-#sidebar a:hover {
-  border-bottom: 1px solid #fff1c1;
-}
-
-.sidebar-submenu {
-  margin-left: 0;
-  padding-left: 15px;
-  border-left: 2px solid #fff1c1;
-}
 </style>

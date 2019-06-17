@@ -18,6 +18,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '~bulma/css/bulma.css';
+@import '~@fortawesome/fontawesome-free/css/all.css';
 
 #app {
   font-family: 'Avenir next', sans-serif;

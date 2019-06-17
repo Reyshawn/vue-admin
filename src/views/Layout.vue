@@ -3,7 +3,7 @@
     <sidebar :closed.sync="closed" />
     <div class="main-content">
       <NavBar>
-        <div class="sidebar-toggle" @click="closed=!closed"><span>Toggle</span></div>
+        <div class="sidebar-toggle" @click="closeSidebar"><span>Toggle</span></div>
       </NavBar>
       <router-view></router-view>
     </div>
@@ -24,11 +24,17 @@ export default {
   components: {
     Sidebar,
     NavBar
+  },
+  methods: {
+    closeSidebar () {
+      this.closed=!this.closed
+
+    }
   }
 }
 </script>
 
-<style scoped>
+<style>
 .container {
   display: flex;
   color: #fff1c1;
@@ -38,9 +44,10 @@ export default {
 }
 
 #sidebar {
-  min-width: 200px;
+  width: 200px;
   max-width: 200px;
   min-height: 100vh;
+  max-height: 100vh;
 }
 
 .main-content {
@@ -50,27 +57,15 @@ export default {
 }
 
 #sidebar {
-  transition:margin-left 0.5s;
+  transition:width 0.5s;
 }
 
 .collapse #sidebar {
-  margin-left: -200px;
+  width: 53px;
 }
 
-.test {
-  display: flex;
-  align-items: stretch;
-  height: 100px;
-  width: 100%;
+.collapse #sidebar .menu-title {
+  visibility: hidden;
 }
 
-.box1 {
-  width: 200px;
-  background-color: teal;
-}
-
-.box2 {
-  width: 100%;
-  background-color: coral;
-}
 </style>
