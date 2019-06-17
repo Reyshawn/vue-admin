@@ -75,7 +75,7 @@ export default new Vuex.Store({
 
     pushMessage ({ commit, state }, data) {
       let l = state.Messages.length
-      data.id = l ? state.Messages[l-1].id+1 : 0
+      data.id = l ? state.Messages[l - 1].id + 1 : 0
       commit('ADD_MSG', data)
       setTimeout(() => {
         commit('DELETE_MSG', data.id)

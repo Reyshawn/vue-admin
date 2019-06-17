@@ -48,7 +48,7 @@ export default {
       if (this.password !== this.password_2) {
         this.$store.dispatch('pushMessage', {
           type: 'warning',
-          msg: 'Password do not match' 
+          msg: 'Password do not match'
         })
       }
       if (this.password.length < 6) {
