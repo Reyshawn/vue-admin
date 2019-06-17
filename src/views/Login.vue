@@ -9,7 +9,7 @@
         <div class="field">
            <input type="password" class="input is-small" placeholder="Password" v-model="password">
         </div>
-        <button type="submit" class="button is-primary">Login</button>
+        <button type="submit" class="button">Login</button>
         <router-link to='/register'><button class="button">Register</button></router-link>
       </form>
     </div>

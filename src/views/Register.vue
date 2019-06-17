@@ -20,7 +20,7 @@
           <input type="password" name="password_2" class="input is-small" placeholder="Repeat the password" v-model="password_2">
         </div>
         <router-link to="/login"><button class="button">Login</button></router-link>
-        <button type='submit' class="button is-primary">Submit</button>
+        <button type='submit' class="button">Register</button>
       </form>
     </div>
   </div>
@@ -67,6 +67,11 @@ export default {
         this.$store.dispatch('register', info)
           .then(response => {
             console.log(response)
+            this.$store.dispatch('pushMessage', {
+              type: 'success',
+              msg: '❤️ Register succeeded.'
+            })
+            this.$router.push('/login')
           })
       }
     }
