@@ -1,6 +1,6 @@
 <template>
-  <div class="register-container columns is-vcentered is-centered">
-    <div class="column is-3">
+  <div class="register-container columns is-centered">
+    <div class="register-form column is-3">
       <h1 class="title">Register Form</h1>
       <form @submit.prevent="register">
         <div class="field">
@@ -79,12 +79,30 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .register-container {
   height: 100%;
   width: 100%;
   background-color: #293462;
   margin: 0;
+}
+
+.register-form {
+  margin-top: 200px;
+}
+
+.button {
+  width: 100px;
+  margin: 0 20px 0 0;
+  border: none;
+  color: #fff1c1;
+  background-color: #293462;
+  border-radius: 0 !important;
+}
+
+.button:hover {
+  background-color: #242e58;
+  color: #fff1c1;
 }
 
 h1.title {

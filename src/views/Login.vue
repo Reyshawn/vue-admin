@@ -1,6 +1,6 @@
 <template>
-  <div class="login-container columns is-vcentered is-centered">
-    <div class="column is-3">
+  <div class="login-container columns is-centered">
+    <div class="login-form column is-3">
       <h1 class="title">Login Form</h1>
       <form @submit.prevent="login">
         <div class="field">
@@ -52,12 +52,30 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .login-container {
   height: 100%;
   width: 100%;
   background-color: #293462;
   margin: 0;
+}
+
+.login-form {
+  margin-top: 200px;
+}
+
+.button {
+  width: 100px;
+  margin: 0 20px 0 0;
+  border: none;
+  color: #fff1c1;
+  background-color: #293462;
+  border-radius: 0 !important;
+}
+
+.button:hover {
+  background-color: #242e58;
+  color: #fff1c1;
 }
 
 h1.title {
