@@ -28,15 +28,22 @@ export default {
   methods: {
     login () {
       if (!this.email || !this.password) {
-        this.$store.commit('ADD_ERROR_MSG', { msg: 'Please fill in all fields.' })
+        this.$store.dispatch('pushMessage', {
+          type: 'warning',
+          msg: 'Please fill in all fields.'
+        })
       }
-      if (this.$store.getters.errorMessages.length === 0) {
+      if (this.$store.getters.Messages.length === 0) {
         let info = {
           email: this.email,
           password: this.password
         }
         this.$store.dispatch('login', info).then(response => {
           console.log('login:', response)
+          this.$store.dispatch('pushMessage', {
+            type: 'success',
+            msg: '❤️ Logged in success!'
+          })
           this.$router.push('/')
         })
       }

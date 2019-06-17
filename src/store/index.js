@@ -7,26 +7,24 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    errorMessages: [],
+    Messages: [],
     componentRoutes
   },
   mutations: {
-    ADD_ERROR_MSG (state, payload) {
-      let l = state.errorMessages.length
-      payload.id = l ? state.errorMessages[l-1].id+1 : 0
-      state.errorMessages.push(payload)
+    ADD_MSG (state, payload) {
+      state.Messages.push(payload)
     },
 
-    DELETE_ERROR_MSG (state, id) {
-      state.errorMessages = state.errorMessages.filter(err => err.id !== id)
+    DELETE_MSG (state, id) {
+      state.Messages = state.Messages.filter(msg => msg.id !== id)
     }
   },
   getters: {
-    errorMessages: state => state.errorMessages,
+    Messages: state => state.Messages,
     componentRoutes: state => state.componentRoutes
   },
   actions: {
-    login ({ commit }, data) {
+    login ({ dispatch }, data) {
       return new Promise((resolve, reject) => {
         axios.post('/auth/login', data)
           .then((response) => {
@@ -36,7 +34,10 @@ export default new Vuex.Store({
             }
           })
           .catch(err => {
-            commit('ADD_ERROR_MSG', { msg: err.response.data })
+            dispatch('pushMessage', {
+              type: 'warning',
+              msg: err.response.data
+            })
             reject(err.response)
           })
       })
@@ -56,17 +57,29 @@ export default new Vuex.Store({
       })
     },
 
-    register ({ commit }, data) {
+    register ({ dispatch }, data) {
       return new Promise((resolve, reject) => {
         axios.post('/auth/register', data)
           .then((response) => {
             resolve(response.data)
           })
           .catch(err => {
-            commit('ADD_ERROR_MSG', { msg: err.response.data })
+            dispatch('pushMessage', {
+              type: 'warning',
+              msg: err.response.data
+            })
             reject(err)
           })
       })
+    },
+
+    pushMessage ({ commit, state }, data) {
+      let l = state.Messages.length
+      data.id = l ? state.Messages[l-1].id+1 : 0
+      commit('ADD_MSG', data)
+      setTimeout(() => {
+        commit('DELETE_MSG', data.id)
+      }, 3000)
     }
   }
 })

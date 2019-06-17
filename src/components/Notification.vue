@@ -1,18 +1,22 @@
 <template>
   <div
     class="notification-center">
-    <div
-      v-for="error in errorMessages"
-      :key="error.id"
-      class="message is-warning">
-      <div class="message-header">
-        <p>Warning</p>
-        <button @click="deleteErrMsg(error.id)" class="delete" aria-label="delete"></button>
+    <transition-group name="fade" class="message-container">
+      <div
+        v-for="message in Messages"
+        :key="message.id"
+        class="message-item message"
+        :class="'is-'+message.type"
+        >
+        <div class="message-header">
+          <p>{{message.type[0].toUpperCase() + message.type.slice(1)}}</p>
+          <button @click="deleteMsg(message.id)" class="delete" aria-label="delete"></button>
+        </div>
+        <div class="message-body">
+          <p>{{message.msg}}</p>
+        </div>
       </div>
-      <div class="message-body">
-        <p>{{error.msg}}</p>
-      </div>
-    </div>
+    </transition-group>
   </div>
 </template>
 
@@ -21,19 +25,14 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Notification',
-  data () {
-    return {
-      
-    }
-  },
   computed: {
     ...mapGetters([
-      'errorMessages'
+      'Messages'
     ])
   },
   methods: {
-    deleteErrMsg(id) {
-      this.$store.commit('DELETE_ERROR_MSG', id)
+    deleteMsg (id) {
+      this.$store.commit('DELETE_MSG', id)
     }
   }
 }
@@ -46,5 +45,26 @@ export default {
   bottom: 20px;
   width: 300px;
   z-index: 1;
+}
+
+.message-container {
+  margin: 0;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.message-item:last-child:not(:first-child) {
+  margin-bottom: 24px;
+}
+
+.message-item:first-child {
+  margin-bottom: 0;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to{
+  opacity: 0;
 }
 </style>

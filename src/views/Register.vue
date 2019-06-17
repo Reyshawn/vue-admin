@@ -40,15 +40,24 @@ export default {
   methods: {
     register () {
       if (!this.username || !this.email || !this.password || !this.password_2) {
-        this.$store.commit('ADD_ERROR_MSG', { msg: 'Please fill in all fields.' })
+        this.$store.dispatch('pushMessage', {
+          type: 'warning',
+          msg: 'Please fill in all fields.'
+        })
       }
       if (this.password !== this.password_2) {
-        this.$store.commit('ADD_ERROR_MSG', { msg: 'Password do not match' })
+        this.$store.dispatch('pushMessage', {
+          type: 'warning',
+          msg: 'Password do not match' 
+        })
       }
       if (this.password.length < 6) {
-        this.$store.commit('ADD_ERROR_MSG', { msg: 'Password should be at least 6 characters' })
+        this.$store.dispatch('pushMessage', {
+          type: 'warning',
+          msg: 'Password should be at least 6 characters'
+        })
       }
-      if (this.$store.getters.errorMessages.length === 0) {
+      if (this.$store.getters.Messages.length === 0) {
         let info = {
           name: this.username,
           email: this.email,
