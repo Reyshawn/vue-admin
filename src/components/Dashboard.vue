@@ -1,18 +1,27 @@
 <template>
   <div class="dashboard-container">
-    <div class="box box1"></div>
-    <div class="box box2"></div>
+    <div class="box box1">
+      
+    </div>
+    <div class="box box2">
+      <test-chart :height="200" :width="800" />
+    </div>
     <div class="box box3"></div>
     <div class="box box4"></div>
     <div class="box box5"></div>
     <div class="box box6"></div>
+    
   </div>
 </template>
 
 <script>
+import testChart from './testChart'
 
 export default {
-  name: 'dashboard'
+  name: 'dashboard',
+  components: {
+    testChart
+  }
 }
 </script>
 
