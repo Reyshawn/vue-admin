@@ -81,12 +81,16 @@ export default {
   align-items: center;
 }
 
+.menu-title {
+  width: 100%
+}
+
 .menu-item:hover {
   background-color: #242e58;
 }
 
 .menu-item > span.icon {
-  margin: 0 16px 0 16px;
+  min-width: 50px;
 }
 
 #sidebar a {

@@ -27,8 +27,7 @@ export default {
   },
   methods: {
     closeSidebar () {
-      this.closed=!this.closed
-
+      this.closed = !this.closed
     }
   }
 }
@@ -61,7 +60,7 @@ export default {
 }
 
 .collapse #sidebar {
-  width: 53px;
+  width: 52.2px;
 }
 
 .collapse #sidebar .menu-title {
