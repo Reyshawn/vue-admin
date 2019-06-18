@@ -85,6 +85,11 @@ export default {
   width: 100%
 }
 
+/* When collapsed, hidden the text. */
+.collapse #sidebar .menu-title {
+  visibility: hidden;
+}
+
 .menu-item:hover {
   background-color: #242e58;
 }
