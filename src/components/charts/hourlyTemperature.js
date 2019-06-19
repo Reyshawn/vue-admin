@@ -20,16 +20,16 @@ export default {
       .then(response => {
         let hourly = extractData(response.data.hourly.data, 'temperature', 'time')
         let hourlyTemperature = hourly.temperature.map(i => toCelsius(i))
-        let hourlyLabel = hourly.time.map(i => i*1000)
+        let hourlyLabel = hourly.time.map(i => i * 1000)
 
         this.hourlyChartData = {
           labels: hourlyLabel,
-          datasets:[{
+          datasets: [{
             label: 'temperature',
             data: hourlyTemperature,
             pointRadius: 0,
-            backgroundColor: "rgba(75,192,192,0.4)",
-            borderColor: "rgba(75,192,192,1)",
+            backgroundColor: 'rgba(75,192,192,0.4)',
+            borderColor: 'rgba(75,192,192,1)',
             borderWidth: 2
           }]
         }
@@ -68,18 +68,18 @@ export default {
               gridLines: {
                 borderDash: [2, 2],
                 display: true,
-                drawBorder: false,
+                drawBorder: false
               },
               ticks: {
                 min: Math.min.apply(null, hourlyTemperature) - 1,
                 max: Math.max.apply(null, hourlyTemperature) + 1,
                 stepSize: 1,
                 fontFamily: 'Avenir next',
-                fontSize: 10,
+                fontSize: 10
               }
             }]
           }
         })
-    })
+      })
   }
 }
