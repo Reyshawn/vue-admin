@@ -1,7 +1,7 @@
-import { Bar } from 'vue-chartjs'
+import { Line } from 'vue-chartjs'
 
 export default {
-  extends: Bar,
+  extends: Line,
   mounted () {
     this.renderChart({
       labels: ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
@@ -14,21 +14,17 @@ export default {
           105162,
           95072
         ],
-        //backgroundColor: 'teal'
-        backgroundColor: [
-          '#010059',
-          '#52437b',
-          '#ff7a8a',
-          '#fcf594',
-          '#fafdcb',
-          '#aee7e8',
-          '#28c3d4',
-          '#248ea9'
+        borderWidth: 1
+      },{
+        data: [
+          317594,
+          481045,
+          153060,
+          506519,
+          205162,
+          650720
         ],
-        borderWidth: 1,
-        borderColor: '#777',
-        hoverBorderWidth: 3,
-        hoverBorderColor: '#000'
+        borderWidth: 1
       }]
     }, {
       title: {
@@ -42,17 +38,6 @@ export default {
         labels: {
           fontColor: 'teal'
         }
-      },
-      layout: {
-        padding: {
-          left: 50,
-          right: 0,
-          bottom: 0,
-          top: 0
-        }
-      },
-      tooltips: {
-        enabled:false
       }
     })
   }
