@@ -2,39 +2,28 @@
   <div class="dashboard-container">
     <div class="box box1"></div>
     <div class="box box2">
-      <test-chart :height="200" :width="800" />
+      <daily-temperature :height="240" :width="800" />
     </div>
     <div class="box box3">
-      <test-chart :height="200" :width="800" />
+      <hourly-temperature :height="240" :width="800" />
     </div>
-    <div class="box box4"></div>
+    <div class="box box4">
+      {{  }}
+    </div>
     <div class="box box5"></div>
     <div class="box box6"></div>
   </div>
 </template>
 
 <script>
-import testChart from './testChart'
-// import { WeatherAPI } from '@/config/api'
-import axios from 'axios'
-
-// Mock axios
-import mock from '@/mock/mockAxios'
-mock(axios)
+import dailyTemperature from './charts/dailyTemperature'
+import hourlyTemperature from './charts/hourlyTemperature'
 
 export default {
   name: 'dashboard',
   components: {
-    testChart
-  },
-  mounted () {
-    // Get the weather data from https://api.darksky.net/forecast/
-    // let place = '22.5307227,%20113.9121553'
-    axios.get(`/users`)
-      .then(response => {
-        console.log(response.status)
-        console.log(response.data)
-      })
+    dailyTemperature,
+    hourlyTemperature
   }
 }
 </script>
