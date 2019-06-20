@@ -11,5 +11,6 @@ export function extractData (data, ...args) {
 }
 
 export function toCelsius (F) {
-  return (F - 32) * 5 / 9
+  let C = (F - 32) * 5 / 9
+  return parseFloat(C.toFixed(2))
 }

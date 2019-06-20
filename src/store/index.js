@@ -3,9 +3,15 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import { componentRoutes } from '@/router'
 
+import weather from './modules/weather'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  // Load external modules
+  modules: {
+    weather
+  },
   state: {
     Messages: [],
     componentRoutes

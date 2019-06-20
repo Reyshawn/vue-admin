@@ -8,7 +8,7 @@ module.exports = {
       '/forecast': {
         target: 'https://api.darksky.net/',
         changeOrigin: true
-      },
+      }
     }
   }
 }

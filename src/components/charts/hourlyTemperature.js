@@ -2,11 +2,6 @@ import { Line } from 'vue-chartjs'
 import { extractData, toCelsius } from './tempUtils'
 
 // import { WeatherAPI } from '@/config/api'
-import axios from 'axios'
-
-// Mock axios
-import mock from '@/mock/mockAxios'
-mock(axios)
 
 export default {
   extends: Line,
@@ -16,9 +11,9 @@ export default {
     }
   },
   mounted () {
-    axios.get(`/users`)
+    this.$store.dispatch('getWeatherData')
       .then(response => {
-        let hourly = extractData(response.data.hourly.data, 'temperature', 'time')
+        let hourly = extractData(response.hourly.data, 'temperature', 'time')
         let hourlyTemperature = hourly.temperature.map(i => toCelsius(i))
         let hourlyLabel = hourly.time.map(i => i * 1000)
 

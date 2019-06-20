@@ -8,22 +8,24 @@
       <hourly-temperature :height="240" :width="800" />
     </div>
     <div class="box box4">
-      {{  }}
+      <UVIndex />
     </div>
     <div class="box box5"></div>
-    <div class="box box6"></div>
+    <div class="box box6"><div class="test-box"></div></div>
   </div>
 </template>
 
 <script>
 import dailyTemperature from './charts/dailyTemperature'
 import hourlyTemperature from './charts/hourlyTemperature'
+import UVIndex from './charts/UVIndex'
 
 export default {
   name: 'dashboard',
   components: {
     dailyTemperature,
-    hourlyTemperature
+    hourlyTemperature,
+    UVIndex
   }
 }
 </script>
