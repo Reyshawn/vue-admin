@@ -16,7 +16,7 @@ export default {
         let daily = extractData(response.daily.data, 'temperatureHigh', 'temperatureLow', 'time')
         let dailyTemperatureHigh = daily.temperatureHigh.map(i => toCelsius(i))
         let dailyTemperatureLow = daily.temperatureLow.map(i => toCelsius(i))
-        let dailyLabel = daily.time.map(i => new Date(i * 1000).toLocaleString().slice(0, 9))
+        let dailyLabel = daily.time.map(i => new Date(i * 1000).toDateString().slice(4, 10))
 
         this.dailyChartData = {
           labels: dailyLabel,

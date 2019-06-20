@@ -1,6 +1,8 @@
 <template>
   <div class="dashboard-container">
-    <div class="box box1"></div>
+    <div class="box box1">
+      <weather-details />
+    </div>
     <div class="box box2">
       <daily-temperature :height="240" :width="800" />
     </div>
@@ -8,24 +10,30 @@
       <hourly-temperature :height="240" :width="800" />
     </div>
     <div class="box box4">
-      <UVIndex />
+      <uv-index />
     </div>
-    <div class="box box5"></div>
-    <div class="box box6"><div class="test-box"></div></div>
+    <div class="box box5">
+      <p>air visibility</p>
+    </div>
+    <div class="box box6"><div class="test-box"></div>
+      <p>wind status</p>
+    </div>
   </div>
 </template>
 
 <script>
 import dailyTemperature from './charts/dailyTemperature'
 import hourlyTemperature from './charts/hourlyTemperature'
-import UVIndex from './charts/UVIndex'
+import uvIndex from './charts/uvIndex'
+import weatherDetails from './weatherDetails'
 
 export default {
   name: 'dashboard',
   components: {
     dailyTemperature,
     hourlyTemperature,
-    UVIndex
+    uvIndex,
+    weatherDetails
   }
 }
 </script>
