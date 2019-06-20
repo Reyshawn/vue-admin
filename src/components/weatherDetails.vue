@@ -31,7 +31,7 @@
               <i class="fas fa-arrow-circle-right"></i>
             </span>
             Dew Pt : {{dewPoint}} °
-          </li>         
+          </li>
           <li>
             <span class="icon is-small is-left">
               <i class="fas fa-arrow-circle-right"></i>
@@ -48,7 +48,7 @@
       </div>
     </div>
     <div class="weather-location">
-      
+
       <div class="date">
         <p>
           <span class="icon is-small is-left">
@@ -85,7 +85,7 @@ export default {
       apparentTemperature: null,
       dewPoint: null,
       pressure: null,
-      ozone: null,
+      ozone: null
     }
   },
   mounted () {
@@ -106,7 +106,7 @@ export default {
       return new Date(this.time * 1000).toDateString()
     },
     formatTime () {
-      return new Date(this.time * 1000).toLocaleTimeString().slice(0,18)
+      return new Date(this.time * 1000).toLocaleTimeString().slice(0, 18)
     }
   }
 
@@ -206,6 +206,5 @@ export default {
   font-size: 0.9em;
   padding-left: 1.4em;
 }
-
 
 </style>
