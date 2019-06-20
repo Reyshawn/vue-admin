@@ -18,11 +18,11 @@
         <span class="icon is-small is-left">
           <i class="fas fa-temperature-high"></i>
         </span>
-        Feeling: {{apparentTemperature}} °C
+        Feels like {{apparentTemperature}} °C
       </p>
       <div class="weather-summary">
         <p>Now: {{ summary }}</p>
-        <p>Summary : {{ dailySummary }} </p>
+        <p>This Week : {{ dailySummary }} </p>
       </div>
       <div class="weather-details">
         <ul>
@@ -30,13 +30,13 @@
             <span class="icon is-small is-left">
               <i class="fas fa-arrow-circle-right"></i>
             </span>
-            Dew Point : {{dewPoint}}
+            Dew Pt : {{dewPoint}} °
           </li>         
           <li>
             <span class="icon is-small is-left">
               <i class="fas fa-arrow-circle-right"></i>
             </span>
-            Pressure : {{pressure}}
+            Pressure : {{pressure}} hPa
           </li>
           <li>
             <span class="icon is-small is-left">

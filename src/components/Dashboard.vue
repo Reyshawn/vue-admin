@@ -13,10 +13,10 @@
       <uv-index />
     </div>
     <div class="box box5">
-      <p>air visibility</p>
+      <air-visibility />
     </div>
-    <div class="box box6"><div class="test-box"></div>
-      <p>wind status</p>
+    <div class="box box6">
+      <wind-status />
     </div>
   </div>
 </template>
@@ -26,6 +26,8 @@ import dailyTemperature from './charts/dailyTemperature'
 import hourlyTemperature from './charts/hourlyTemperature'
 import uvIndex from './charts/uvIndex'
 import weatherDetails from './weatherDetails'
+import windStatus from './windStatus'
+import airVisibility from './airVisibility'
 
 export default {
   name: 'dashboard',
@@ -33,7 +35,9 @@ export default {
     dailyTemperature,
     hourlyTemperature,
     uvIndex,
-    weatherDetails
+    weatherDetails,
+    windStatus,
+    airVisibility
   }
 }
 </script>
