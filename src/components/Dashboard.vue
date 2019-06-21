@@ -4,11 +4,9 @@
       <weather-details />
     </div>
     <div class="box box2">
-      <!-- <daily-temperature :height="240" :width="800" /> -->
       <daily-t />
     </div>
     <div class="box box3">
-      <!-- <hourly-temperature :height="240" :width="800" /> -->
       <hourly-t />
     </div>
     <div class="box box4">
