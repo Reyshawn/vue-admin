@@ -27,7 +27,8 @@ export default {
         },
         chart: {
           type: 'solidgauge',
-          height: '100%'
+          height: 200,
+          width: 200
         },
         exporting: {
           enabled: false

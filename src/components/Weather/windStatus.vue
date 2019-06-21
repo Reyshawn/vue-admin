@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { toBearing } from './charts/tempUtils'
+import { toBearing } from './utils'
 
 export default {
   name: 'wind-status',

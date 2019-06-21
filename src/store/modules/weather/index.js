@@ -1,10 +1,10 @@
 import axios from 'axios'
 
 import { WeatherAPI } from '@/config/api'
-const place = '22.5306515,113.9121532'
 
 // Mock axios
 import mock from '@/mock/mockAxios'
+const place = '22.5306515,113.9121532'
 mock(axios)
 
 const state = {

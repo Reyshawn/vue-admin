@@ -4,10 +4,12 @@
       <weather-details />
     </div>
     <div class="box box2">
-      <daily-temperature :height="240" :width="800" />
+      <!-- <daily-temperature :height="240" :width="800" /> -->
+      <daily-t />
     </div>
     <div class="box box3">
-      <hourly-temperature :height="240" :width="800" />
+      <!-- <hourly-temperature :height="240" :width="800" /> -->
+      <hourly-t />
     </div>
     <div class="box box4">
       <uv-index />
@@ -22,18 +24,19 @@
 </template>
 
 <script>
-import dailyTemperature from './charts/dailyTemperature'
-import hourlyTemperature from './charts/hourlyTemperature'
-import uvIndex from './charts/uvIndex'
-import weatherDetails from './weatherDetails'
-import windStatus from './windStatus'
-import airVisibility from './airVisibility'
+import dailyT from './Weather/dailyT'
+import hourlyT from './Weather/hourlyT'
+
+import uvIndex from './Weather/uvIndex'
+import weatherDetails from './Weather/weatherDetails'
+import windStatus from './Weather/windStatus'
+import airVisibility from './Weather/airVisibility'
 
 export default {
   name: 'dashboard',
   components: {
-    dailyTemperature,
-    hourlyTemperature,
+    dailyT,
+    hourlyT,
     uvIndex,
     weatherDetails,
     windStatus,
