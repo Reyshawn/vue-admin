@@ -1,7 +1,5 @@
 import { Line } from 'vue-chartjs'
-import { extractData, toCelsius } from './tempUtils'
-
-// import { WeatherAPI } from '@/config/api'
+import { extractData } from './tempUtils'
 
 export default {
   extends: Line,
@@ -14,7 +12,7 @@ export default {
     this.$store.dispatch('getWeatherData')
       .then(response => {
         let hourly = extractData(response.hourly.data, 'temperature', 'time')
-        let hourlyTemperature = hourly.temperature.map(i => toCelsius(i))
+        let hourlyTemperature = hourly.temperature
         let hourlyLabel = hourly.time.map(i => i * 1000)
 
         this.hourlyChartData = {
@@ -66,8 +64,8 @@ export default {
                 drawBorder: false
               },
               ticks: {
-                min: Math.min.apply(null, hourlyTemperature) - 1,
-                max: Math.max.apply(null, hourlyTemperature) + 1,
+                /* min: Math.min.apply(null, hourlyTemperature) - 1,
+                max: Math.max.apply(null, hourlyTemperature) + 1, */
                 stepSize: 1,
                 fontFamily: 'Avenir next',
                 fontSize: 10

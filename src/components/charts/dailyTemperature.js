@@ -1,7 +1,5 @@
 import { Bar } from 'vue-chartjs'
-import { extractData, toCelsius } from './tempUtils'
-
-// import { WeatherAPI } from '@/config/api'
+import { extractData } from './tempUtils'
 
 export default {
   extends: Bar,
@@ -14,8 +12,8 @@ export default {
     this.$store.dispatch('getWeatherData')
       .then(response => {
         let daily = extractData(response.daily.data, 'temperatureHigh', 'temperatureLow', 'time')
-        let dailyTemperatureHigh = daily.temperatureHigh.map(i => toCelsius(i))
-        let dailyTemperatureLow = daily.temperatureLow.map(i => toCelsius(i))
+        let dailyTemperatureHigh = daily.temperatureHigh
+        let dailyTemperatureLow = daily.temperatureLow
         let dailyLabel = daily.time.map(i => new Date(i * 1000).toDateString().slice(4, 10))
 
         this.dailyChartData = {

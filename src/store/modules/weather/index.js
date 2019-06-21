@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-// import { WeatherAPI } from '@/config/api'
-// const place = '22.5306515,113.9121532'
+import { WeatherAPI } from '@/config/api'
+const place = '22.5306515,113.9121532'
 
 // Mock axios
 import mock from '@/mock/mockAxios'
@@ -19,8 +19,7 @@ const actions = {
   getWeatherData ({ dispatch, state }) {
     return new Promise((resolve, reject) => {
       if (!state.WeatherData) {
-        axios.get(`/forecast`)
-        /* axios.get(`/forecast/${WeatherAPI}/${place}`) */
+        axios.get(`/forecast/${WeatherAPI}/${place}?units=si`)
           .then(response => {
             state.WeatherData = response.data
             dispatch('pushMessage', {

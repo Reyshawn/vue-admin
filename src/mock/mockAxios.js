@@ -3,7 +3,7 @@ import WeatherData from './WeatherData'
 
 export default (axios) => {
   const mock = new MockAdapter(axios)
-  mock.onGet('/forecast').reply(200, WeatherData)
+  mock.onGet(/\/forecast\/[^ ]+/).reply(200, WeatherData)
   mock.onPost(/\/auth\/[^ ]+/).passThrough()
   mock.onGet(/\/auth\/[^ ]+/).passThrough()
 }

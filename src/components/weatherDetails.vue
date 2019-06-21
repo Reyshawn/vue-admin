@@ -72,8 +72,6 @@
 </template>
 
 <script>
-import { toCelsius } from './charts/tempUtils'
-
 export default {
   name: 'weather-details',
   data () {
@@ -92,8 +90,8 @@ export default {
     this.$store.dispatch('getWeatherData')
       .then(response => {
         this.time = response.currently.time
-        this.temperature = toCelsius(response.currently.temperature)
-        this.apparentTemperature = toCelsius(response.currently.apparentTemperature)
+        this.temperature = response.currently.temperature
+        this.apparentTemperature = response.currently.apparentTemperature
         this.summary = response.currently.summary + '!  😆'
         this.dailySummary = response.daily.summary
         this.dewPoint = response.currently.dewPoint
