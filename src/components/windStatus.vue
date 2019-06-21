@@ -7,13 +7,14 @@
         <div class="icon">
           <i class="fas fa-wind"></i>
         </div>
-        <p class="wind-value"> {{ windBearing }} </p>
+        <p class="wind-value"> {{ bearing }} </p>
+        <p> {{ windBearing }}° </p>
       </div>
       <div class="wind-speed">
         <p class="title"> Speed </p>
-        <div class="icon">
-          <i class="fas fa-fan"></i>
-        </div>
+          <div class="icon rotation">
+            <i class="fas fa-fan"></i>
+          </div>
         <p class="wind-value"> {{ windSpeed }} </p>
         <p>m/s</p>
       </div>
@@ -22,18 +23,22 @@
 </template>
 
 <script>
+import { toBearing } from './charts/tempUtils'
+
 export default {
   name: 'wind-status',
   data () {
     return {
       windBearing: null,
-      windSpeed: null
+      windSpeed: null,
+      bearing: null
     }
   },
   mounted () {
     this.$store.dispatch('getWeatherData')
       .then(response => {
         this.windBearing = response.currently.windBearing
+        this.bearing = toBearing(this.windBearing)
         this.windSpeed = response.currently.windSpeed
       })
   }
@@ -76,6 +81,20 @@ export default {
   margin-top: 1.5em;
   font-size: 1.4em;
   font-weight: 500;
+}
+
+.rotation {
+  animation: spin 2s ease-in-out;
+}
+
+.rotation:hover {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(-720deg);
+  }
 }
 
 </style>

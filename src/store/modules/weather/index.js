@@ -9,7 +9,6 @@ mock(axios)
 
 const state = {
   WeatherData: null,
-  Count: 0
 }
 
 const mutations = {
@@ -20,7 +19,6 @@ const actions = {
   getWeatherData ({ dispatch, state }) {
     return new Promise((resolve, reject) => {
       if (!state.WeatherData) {
-        state.Count += 1
         axios.get(`/forecast`)
         /* axios.get(`/forecast/${WeatherAPI}/${place}`) */
           .then(response => {
@@ -33,10 +31,6 @@ const actions = {
           })
           .catch(err => reject(err))
       } else {
-        dispatch('pushMessage', {
-          type: 'warninig',
-          msg: '😆 Data has been saved!'
-        })
         resolve(state.WeatherData)
       }
     })
@@ -45,7 +39,6 @@ const actions = {
 
 const getters = {
   WeatherData: state => state.WeatherData,
-  Count: state => state.Count
 }
 
 const weatherModule = {
