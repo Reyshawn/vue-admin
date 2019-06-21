@@ -8,7 +8,7 @@ import mock from '@/mock/mockAxios'
 mock(axios)
 
 const state = {
-  WeatherData: null,
+  WeatherData: null
 }
 
 const mutations = {
@@ -38,7 +38,7 @@ const actions = {
 }
 
 const getters = {
-  WeatherData: state => state.WeatherData,
+  WeatherData: state => state.WeatherData
 }
 
 const weatherModule = {

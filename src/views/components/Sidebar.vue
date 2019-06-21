@@ -1,12 +1,12 @@
 <template>
   <nav id="sidebar">
     <ul>
-      <div class="menu-item">
+      <router-link to="/dashboard" tag="div" class="menu-item">
         <span class="icon">
           <i class="fas fa-tachometer-alt"></i>
         </span>
-        <router-link to="/dashboard" class="menu-title">Dashboard</router-link>
-      </div>
+        <p class="menu-title">Dashboard</p>
+      </router-link>
       <div class="menu-item"  @click="active = !active">
         <span class="icon">
           <i class="fas fa-angle-double-right"></i>
@@ -14,11 +14,13 @@
         <a class="menu-title">Components</a>
       </div>
       <div class="sidemenu" v-if="active">
-        <div class="menu-item" v-for="route in componentRoutes" :key=route.path>
-          <span class="icon">
-            <i class="fas fa-angle-double-right"></i>
-          </span>
-          <router-link :to="route.path" class="menu-title">{{ route.name }}</router-link>
+        <div v-for="route in componentRoutes" :key=route.path>
+          <router-link :to="route.path" tag="div" class="menu-item">
+            <span class="icon">
+              <i class="fas fa-angle-double-right"></i>
+            </span>
+            <p class="menu-title">{{ route.name }}</p>
+          </router-link>
         </div>
       </div>
       <div class="menu-item">
@@ -79,6 +81,7 @@ export default {
   height: 50px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .menu-title {

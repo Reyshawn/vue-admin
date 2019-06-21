@@ -1,11 +1,13 @@
 <template>
   <div class="nav-bar">
-    <div class="nav-list">
-      <slot></slot>
-      <div class="nav-item"><a @click="logout">Logout</a></div>
-      <div class="nav-item"><router-link to="/about">About</router-link></div>
-      <div class="nav-item"><router-link to="/">Home</router-link></div>
-    </div>
+      <div class="slot-left">
+        <slot></slot>
+      </div>
+      <div class="slot-right">
+        <div class="nav-item"><router-link to="/">Home</router-link></div>
+        <div class="nav-item"><router-link to="/about">About</router-link></div>
+        <div class="nav-item"><a @click="logout">Logout</a></div>
+      </div>
   </div>
 </template>
 
@@ -32,25 +34,54 @@ export default {
 .nav-bar {
   height: 50px;
   background-color: #fe5f55;
+  padding: 0;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  align-items: center;
 }
 
-.nav-list {
+.slot-left {
+  margin: 0;
+  height: 100%;
+  width: 50px;
+}
+
+.slot-left .nav-item, .slot-right .nav-item {
   display: flex;
-  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+}
+
+.slot-right {
+  margin-left: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.slot-right .nav-item {
+  padding: 0 0.4em;
 }
 
 .nav-item {
-  margin: auto 10px;
+  height: 100%;
+  cursor: pointer;
 }
 
-.nav-item a {
-  color: #fff1c1;
+.nav-item:hover {
+  background-color: #e4554c;
 }
 
-.nav-item a:hover {
-  border-bottom: 1px solid #fff1c1;
+.nav-item a, .nav-item .icon {
+  color: #293462;
 }
+
+.nav-item .icon {
+  height: auto;
+  width: auto;
+  font-size: 1em;
+}
+
 </style>

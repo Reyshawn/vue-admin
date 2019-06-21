@@ -3,7 +3,9 @@
     <sidebar :closed.sync="closed" />
     <div class="main-content">
       <NavBar>
-        <div class="sidebar-toggle" @click="closeSidebar"><span>Toggle</span></div>
+        <div class="nav-item sidebar-toggle" @click="closeSidebar">
+          <i class="icon fas fa-bars"></i>
+        </div>
       </NavBar>
       <router-view></router-view>
     </div>
