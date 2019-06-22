@@ -15,7 +15,7 @@
         <li class="nav-item"><router-link to="/">Home</router-link></li>
         <li class="nav-item"><router-link to="/about">About</router-link></li>
         <li class="user-profile nav-item">
-          <div class="_dropdown" @click="showDropdown = !showDropdown">
+          <div class="_dropdown" @click="toggleDropdown">
             <img src="@/assets/user.jpg" alt="user-alias">
             <ul class="_dropdown-menu" v-if="showDropdown">
               <li class="_dropdown-menu-item"><a>Dashbord</a></li>
@@ -49,6 +49,19 @@ export default {
           })
           this.$router.push('/login')
         })
+    },
+    toggleDropdown (e) {
+      e.stopPropagation(); // this will stop propagation of this event to upper level
+      this.showDropdown = !this.showDropdown
+      if (this.showDropdown) {
+        window.addEventListener('click', () => {
+          this.showDropdown = false
+        })
+      } else {
+        window.removeEventListener('click', () => {
+          this.showDropdown = false
+        })
+      }
     }
   }
 }
@@ -172,6 +185,7 @@ export default {
 }
 
 /* Dropdown Menu */
+/* Add underscore to avoid the Bulma class name */
 
 .user-profile {
   width: 50px;
@@ -192,10 +206,22 @@ export default {
   transform: scale(1.3,1.3);
 }
 
+/* ._dropdown-cancel {
+  background-color: #242e58;
+  opacity: 0.2;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  position:fixed;
+  top: 0;
+  right: 0;
+  cursor: auto;
+} */
+
 ._dropdown-menu {
   background-color: #293462;
   box-shadow: 10px 10px 30px 1px rgba(0,0,0,0.5);
-  z-index: 2;
+  z-index: 3;
   padding: 0;
   position: absolute;
   top: 50px;
