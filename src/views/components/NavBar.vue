@@ -3,17 +3,41 @@
       <div class="slot-left">
         <slot></slot>
       </div>
-      <div class="slot-right">
-        <div class="nav-item"><router-link to="/">Home</router-link></div>
-        <div class="nav-item"><router-link to="/about">About</router-link></div>
-        <div class="nav-item"><a @click="logout">Logout</a></div>
-      </div>
+        <div class="search-container" >
+          <i class="icon fas fa-search" @click="showSearch=!showSearch"></i>
+          <transition name="slide">
+            <span class="search-box" v-if="showSearch">
+              <input type="text" placeholder="Search ...">
+            </span>
+          </transition>
+        </div>
+      <ul class="slot-right">
+        <li class="nav-item"><router-link to="/">Home</router-link></li>
+        <li class="nav-item"><router-link to="/about">About</router-link></li>
+        <li class="user-profile nav-item">
+          <div class="_dropdown" @click="showDropdown = !showDropdown">
+            <img src="@/assets/user.jpg" alt="user-alias">
+            <ul class="_dropdown-menu" v-if="showDropdown">
+              <li class="_dropdown-menu-item"><a>Dashbord</a></li>
+              <li class="_dropdown-menu-item"><a>Profile</a></li>
+              <li class="_dropdown-menu-item"><a>Settings</a></li>
+              <li class="_dropdown-menu-item"><a @click="logout">Logout</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
   </div>
 </template>
 
 <script>
 export default {
   name: 'NavBar',
+  data () {
+    return {
+      showDropdown: false,
+      showSearch: false
+    }
+  },
   methods: {
     logout () {
       this.$store.dispatch('logout')
@@ -53,7 +77,8 @@ export default {
 }
 
 .slot-right {
-  margin-left: auto;
+  margin-left: 10px;
+  margin-right: 10px;
   height: 100%;
   display: flex;
   flex-direction: row;
@@ -74,7 +99,7 @@ export default {
   background-color: #e4554c;
 }
 
-.nav-item a, .nav-item .icon {
+.nav-bar a, .nav-bar .icon {
   color: #293462;
 }
 
@@ -82,6 +107,112 @@ export default {
   height: auto;
   width: auto;
   font-size: 1em;
+}
+
+/* Search */
+
+.search-container {
+  height: 100%;
+  min-width: 50px;
+  margin-left: auto;
+  margin-right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.search-container .icon {
+  width: auto;
+  height: auto;
+  cursor: pointer;
+}
+
+.search-container .icon:hover {
+  color: #3e4871;
+}
+
+.search-box {
+  width: 100px;
+  border-bottom: 1px solid #293462;
+  margin-left: 10px;
+  font-family: 'Avenir';
+  font-size: 1.2em;
+  color: #293462;
+}
+
+.search-box input {
+  border: none;
+  background-color: #fe5f55;
+  outline: none;
+  width: 100%;
+  font-family: 'Avenir';
+  font-weight: 500;
+  font-size: 0.7em;
+  color: #293462;
+}
+
+.search-box input::placeholder {
+  font-family: 'Avenir';
+  font-weight: 500;
+  color: #293462;
+  opacity: 0.5
+}
+
+.slide-enter , .slide-leave-to {
+  width: 0;
+  border: none;
+}
+
+.slide-enter-active, .slide-leave-active {
+  transition: all 0.3s linear;
+}
+
+.slide-enter-to, .slide-leave {
+  width: 100px;
+  border-bottom: 1px solid #293462;
+}
+
+/* Dropdown Menu */
+
+.user-profile {
+  width: 50px;
+  height: 100%;
+  padding: 0 !important;
+}
+
+._dropdown {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+._dropdown img {
+  clip-path: circle();
+  transform: scale(1.3,1.3);
+}
+
+._dropdown-menu {
+  background-color: #293462;
+  box-shadow: 10px 10px 30px 1px rgba(0,0,0,0.5);
+  z-index: 2;
+  padding: 0;
+  position: absolute;
+  top: 50px;
+  right: 0;
+}
+
+._dropdown-menu a {
+  color: #fff1c1;
+}
+
+._dropdown-menu-item {
+  padding: 3px 7px;
+}
+
+._dropdown-menu-item:hover {
+  background-color: #242e58;
 }
 
 </style>
