@@ -22,7 +22,7 @@ export default {
 @import '~weather-icons/css/weather-icons.min.css';
 
 #app {
-  font-family: 'Avenir next', sans-serif;
+  font-family: 'Avenir', sans-serif;
   height: 100vh;
   max-width: 100%;
 }

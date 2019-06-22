@@ -22,10 +22,6 @@ const actions = {
         axios.get(`/forecast/${WeatherAPI}/${place}?units=si`)
           .then(response => {
             state.WeatherData = response.data
-            dispatch('pushMessage', {
-              type: 'success',
-              msg: '😃 Data received'
-            })
             resolve(state.WeatherData)
           })
           .catch(err => reject(err))

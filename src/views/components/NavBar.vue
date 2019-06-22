@@ -3,8 +3,8 @@
       <div class="slot-left">
         <slot></slot>
       </div>
-        <div class="search-container" >
-          <i class="icon fas fa-search" @click="showSearch=!showSearch"></i>
+        <div class="search-container" @mouseover="showSearch=true" @mouseleave="showSearch=false">
+          <i class="icon fas fa-search"></i>
           <transition name="slide">
             <span class="search-box" v-if="showSearch">
               <input type="text" placeholder="Search ...">
@@ -160,7 +160,6 @@ export default {
 
 .slide-enter , .slide-leave-to {
   width: 0;
-  border: none;
 }
 
 .slide-enter-active, .slide-leave-active {
