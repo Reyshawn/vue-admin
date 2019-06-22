@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { extractData } from './utils'
+import { extractData, iconMap } from './utils'
 
 export default {
   name: 'hourly-temperature-bar',
@@ -46,8 +46,8 @@ export default {
           minorTickLength: 0
         },
         tooltip: {
-          pointFormat: '<div><p style="color:{series.color};padding:0">{series.name}: </p>' +
-                '<p style="padding:0"><b>{point.y:.1f} °C</b></p></div>'
+          pointFormat: '<div><p style="padding:0"><b>{point.y:.1f} °C  </b><i class="wi {point.icon}"></i></p></div>',
+          useHTML: true
         },
         plotOptions: {
           area: {
@@ -64,14 +64,17 @@ export default {
   mounted () {
     this.$store.dispatch('getWeatherData')
       .then(response => {
-        let hourly = extractData(response.hourly.data, 'temperature', 'time')
-        let hourlyTemperature = hourly.temperature
-        let hourlyLabel = hourly.time.map(i => {
-          let t = new Date(i * 1000).toLocaleTimeString()
-          return t
-        })
+        let hourly = extractData(response.hourly.data, 'temperature', 'time', 'icon')
+        let hourlyTemperature = []
+        for (let i = 0; i < hourly.temperature.length; i++) {
+          hourlyTemperature.push({
+            icon: iconMap[hourly.icon[i]],
+            y: hourly.temperature[i]
+          })
+        }
+        let hourlyLabel = hourly.time.map(i => new Date(i * 1000).toLocaleTimeString().replace(/:00 /, ' '))
 
-        let minTemp = Math.min.apply(null, hourlyTemperature)
+        let minTemp = Math.min.apply(null, hourly.temperature)
 
         let series = [{
           type: 'area',

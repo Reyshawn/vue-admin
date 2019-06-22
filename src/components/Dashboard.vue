@@ -50,6 +50,7 @@ export default {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-auto-rows: minmax(240px, auto);
   grid-gap: 1em;
+  max-width: 960px;
 }
 
 .box1 {

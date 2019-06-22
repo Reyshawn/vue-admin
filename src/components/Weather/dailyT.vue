@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { extractData } from './utils'
+import { extractData, iconMap } from './utils'
 
 export default {
   name: 'daily-temperature-bar',
@@ -46,7 +46,7 @@ export default {
         },
         tooltip: {
           headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-          pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+          pointFormat: '<i class="wi {point.icon}" style="margin-left:10px"></i><tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
                 '<td style="padding:0"><b>{point.y:.1f} °C</b></td></tr>',
           footerFormat: '</table>',
           shared: true,
@@ -71,8 +71,16 @@ export default {
   mounted () {
     this.$store.dispatch('getWeatherData')
       .then(response => {
-        let daily = extractData(response.daily.data, 'temperatureHigh', 'temperatureLow', 'time')
-        let dailyTemperatureHigh = daily.temperatureHigh
+        let daily = extractData(response.daily.data, 'temperatureHigh', 'temperatureLow', 'time', 'icon')
+        let dailyTemperatureHigh = []
+
+        for (let i = 0; i < daily.temperatureHigh.length; i++) {
+          dailyTemperatureHigh.push({
+            icon: iconMap[daily.icon[i]],
+            y: daily.temperatureHigh[i]
+          })
+        }
+
         let dailyTemperatureLow = daily.temperatureLow
         let dailyLabel = daily.time.map(i => new Date(i * 1000).toDateString().slice(4, 10))
 

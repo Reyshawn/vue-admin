@@ -8,6 +8,7 @@
     </div>
     <div class="main-content">
       <p class="time">
+         <i class="wi" :class="icon"></i>
         {{ formatTime }}
       </p>
       <div class="current-temperature">
@@ -30,7 +31,7 @@
             <span class="icon is-small is-left">
               <i class="fas fa-arrow-circle-right"></i>
             </span>
-            Dew Pt : {{dewPoint}} °
+            Dew Pt : {{dewPoint}} °C
           </li>
           <li>
             <span class="icon is-small is-left">
@@ -42,7 +43,7 @@
             <span class="icon is-small is-left">
               <i class="fas fa-arrow-circle-right"></i>
             </span>
-            Ozone : {{ozone}}
+            Ozone : {{ozone}} DU.
           </li>
         </ul>
       </div>
@@ -72,15 +73,18 @@
 </template>
 
 <script>
+import { iconMap } from './utils'
+
 export default {
   name: 'weather-details',
   data () {
     return {
       time: null,
-      temperature: null,
       summary: '',
-      dailySummary: '',
+      icon: '',
+      temperature: null,
       apparentTemperature: null,
+      dailySummary: '',
       dewPoint: null,
       pressure: null,
       ozone: null
@@ -90,9 +94,10 @@ export default {
     this.$store.dispatch('getWeatherData')
       .then(response => {
         this.time = response.currently.time
+        this.summary = response.currently.summary + '!  😆'
+        this.icon = iconMap[response.currently.icon]
         this.temperature = response.currently.temperature
         this.apparentTemperature = response.currently.apparentTemperature
-        this.summary = response.currently.summary + '!  😆'
         this.dailySummary = response.daily.summary
         this.dewPoint = response.currently.dewPoint
         this.pressure = response.currently.pressure
@@ -155,7 +160,7 @@ export default {
 }
 
 .main-content .current-temperature {
-  margin: 2px;
+  margin: 1px 0;
   position: relative;
   font-size: 3.5em;
   font-family: 'Avenir' sans-serif;
