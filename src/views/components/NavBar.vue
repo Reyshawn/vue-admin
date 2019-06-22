@@ -51,7 +51,7 @@ export default {
         })
     },
     toggleDropdown (e) {
-      e.stopPropagation(); // this will stop propagation of this event to upper level
+      e.stopPropagation() // this will stop propagation of this event to upper level
       this.showDropdown = !this.showDropdown
       if (this.showDropdown) {
         window.addEventListener('click', () => {
