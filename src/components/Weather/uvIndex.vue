@@ -10,6 +10,8 @@ import exportingInit from 'highcharts/modules/exporting'
 import highchartsMoreInit from 'highcharts/highcharts-more'
 import solidGaugeInit from 'highcharts/modules/solid-gauge'
 
+import { mapGetters } from 'vuex'
+
 exportingInit(Highcharts)
 highchartsMoreInit(Highcharts)
 solidGaugeInit(Highcharts)
@@ -20,8 +22,24 @@ export default {
     return {
       uvIndex: -1,
       humidity: -1,
-      cloudCover: -1,
-      chartOptions: {
+      cloudCover: -1
+    }
+  },
+  computed: {
+    ...mapGetters({
+      WeatherData: 'WeatherData'
+    }),
+    chartData () {
+      let data = {}
+      if (this.WeatherData) {
+        data.uvIndex = this.WeatherData.currently.uvIndex
+        data.humidity = this.WeatherData.currently.humidity
+        data.cloudCover = this.WeatherData.currently.cloudCover
+      }
+      return data;
+    },
+    chartOptions () {
+      let options = {
         credits: {
           enabled: false
         },
@@ -96,8 +114,8 @@ export default {
             color: 'rgb(12,205,214,1)',
             radius: '112%',
             innerRadius: '88%',
-            y: 0,
-            value: 0
+            y: 0 || Math.round((this.chartData.uvIndex / 11) * 100),
+            value: 0 || this.chartData.uvIndex
           }]
         }, {
           name: 'Humidity',
@@ -105,8 +123,8 @@ export default {
             color: 'rgb(41,52,98,1)',
             radius: '87%',
             innerRadius: '63%',
-            y: 0,
-            value: 0
+            y: 0 || this.chartData.humidity * 100,
+            value: 0 || this.chartData.humidity
           }]
         }, {
           name: 'Cloud',
@@ -114,29 +132,13 @@ export default {
             color: 'rgb(246,35,102,1)',
             radius: '62%',
             innerRadius: '38%',
-            y: 0,
-            value: 0
+            y: 0 || this.chartData.cloudCover * 100,
+            value: 0 || this.chartData.cloudCover
           }]
         }]
       }
+      return options
     }
-  },
-  mounted () {
-    this.$store.dispatch('getWeatherData')
-      .then(response => {
-        this.uvIndex = response.currently.uvIndex
-        this.humidity = response.currently.humidity
-        this.cloudCover = response.currently.cloudCover
-
-        this.chartOptions.series[0].data[0].y = Math.round((this.uvIndex / 11) * 100)
-        this.chartOptions.series[1].data[0].y = this.humidity * 100
-        this.chartOptions.series[2].data[0].y = this.cloudCover * 100
-
-        this.chartOptions.series[0].data[0].value = this.uvIndex
-        this.chartOptions.series[1].data[0].value = this.humidity
-        this.chartOptions.series[2].data[0].value = this.cloudCover
-      })
-      .catch(err => console.log('err:', err))
   }
 }
 

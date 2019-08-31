@@ -4,26 +4,28 @@
       <span class="icon is-small is-left">
           <i class="fas fa-search"></i>
       </span>
-      <input type="text" placeholder="Search place...">
+      <input type="text" placeholder="Search place..." v-model="place"
+        @keyup.enter="updateDetails"
+      >
     </div>
     <div class="main-content">
       <p class="time">
-         <i class="wi" :class="icon"></i>
+         <i class="wi" :class="details.icon"></i>
         {{ formatTime }}
       </p>
       <div class="current-temperature">
-        <p> {{temperature}} </p>
+        <p> {{details.temperature}} </p>
         <div class="celsius">°C</div>
       </div>
       <p>
         <span class="icon is-small is-left">
           <i class="fas fa-temperature-high"></i>
         </span>
-        Feels like {{apparentTemperature}} °C
+        Feels like {{details.apparentTemperature}} °C
       </p>
       <div class="weather-summary">
-        <p>Now: {{ summary }}</p>
-        <p>This Week : {{ dailySummary }} </p>
+        <p>Now: {{ details.summary }}</p>
+        <p>This Week : {{ details.dailySummary }} </p>
       </div>
       <div class="weather-details">
         <ul>
@@ -31,19 +33,19 @@
             <span class="icon is-small is-left">
               <i class="fas fa-arrow-circle-right"></i>
             </span>
-            Dew Pt : {{dewPoint}} °C
+            Dew Pt : {{details.dewPoint}} °C
           </li>
           <li>
             <span class="icon is-small is-left">
               <i class="fas fa-arrow-circle-right"></i>
             </span>
-            Pressure : {{pressure}} hPa
+            Pressure : {{details.pressure}} hPa
           </li>
           <li>
             <span class="icon is-small is-left">
               <i class="fas fa-arrow-circle-right"></i>
             </span>
-            Ozone : {{ozone}} DU.
+            Ozone : {{details.ozone}} DU.
           </li>
         </ul>
       </div>
@@ -73,43 +75,40 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { iconMap } from './utils'
 
 export default {
   name: 'weather-details',
   data () {
     return {
-      time: null,
-      summary: '',
-      icon: '',
-      temperature: null,
-      apparentTemperature: null,
-      dailySummary: '',
-      dewPoint: null,
-      pressure: null,
-      ozone: null
+      place: ''
     }
   },
-  mounted () {
-    this.$store.dispatch('getWeatherData')
-      .then(response => {
-        this.time = response.currently.time
-        this.summary = response.currently.summary + '!  😆'
-        this.icon = iconMap[response.currently.icon]
-        this.temperature = response.currently.temperature
-        this.apparentTemperature = response.currently.apparentTemperature
-        this.dailySummary = response.daily.summary
-        this.dewPoint = response.currently.dewPoint
-        this.pressure = response.currently.pressure
-        this.ozone = response.currently.ozone
-      })
-  },
   computed: {
+    ...mapGetters({
+      WeatherData: 'WeatherData'
+    }),
+    details () {
+      let details = {}
+      if (this.WeatherData) {
+        details.time = this.WeatherData.currently.time
+        details.summary = this.WeatherData.currently.summary + '!  😆'
+        details.icon = iconMap[this.WeatherData.currently.icon]
+        details.temperature = this.WeatherData.currently.temperature
+        details.apparentTemperature = this.WeatherData.currently.apparentTemperature
+        details.dailySummary = this.WeatherData.daily.summary
+        details.dewPoint = this.WeatherData.currently.dewPoint
+        details.pressure = this.WeatherData.currently.pressure
+        details.ozone = this.WeatherData.currently.ozone
+      }
+      return details
+    },
     date () {
-      return new Date(this.time * 1000).toDateString()
+      return this.time && new Date(this.time * 1000).toDateString()
     },
     formatTime () {
-      return new Date(this.time * 1000).toLocaleTimeString().slice(0, 18)
+      return this.time && new Date(this.time * 1000).toLocaleTimeString().slice(0, 18)
     }
   }
 

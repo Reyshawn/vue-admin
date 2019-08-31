@@ -11,18 +11,17 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'air-visibility',
-  data () {
-    return {
-      airVisibility: null
+  computed: {
+    ...mapGetters({
+      WeatherData: 'WeatherData'
+    }),
+    airVisibility () {
+      return this.WeatherData && this.WeatherData.currently.visibility
     }
-  },
-  mounted () {
-    this.$store.dispatch('getWeatherData')
-      .then(response => {
-        this.airVisibility = response.currently.visibility
-      })
   }
 
 }

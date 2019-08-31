@@ -23,24 +23,24 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { toBearing } from './utils'
 
 export default {
   name: 'wind-status',
-  data () {
-    return {
-      windBearing: null,
-      windSpeed: null,
-      bearing: null
+  computed: {
+    ...mapGetters({
+      WeatherData: 'WeatherData'
+    }),
+    windBearing () {
+      return this.WeatherData && this.WeatherData.currently.windBearing
+    },
+    bearing () {
+      return toBearing(this.windBearing)
+    },
+    windSpeed () {
+      return this.WeatherData && this.WeatherData.currently.windSpeed
     }
-  },
-  mounted () {
-    this.$store.dispatch('getWeatherData')
-      .then(response => {
-        this.windBearing = response.currently.windBearing
-        this.bearing = toBearing(this.windBearing)
-        this.windSpeed = response.currently.windSpeed
-      })
   }
 }
 </script>

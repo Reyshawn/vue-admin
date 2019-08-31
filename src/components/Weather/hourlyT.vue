@@ -5,13 +5,49 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { extractData, iconMap } from './utils'
 
 export default {
   name: 'hourly-temperature-bar',
-  data () {
-    return {
-      chartOptions: {
+  computed: {
+    ...mapGetters({
+      WeatherData: 'WeatherData'
+    }),
+    hourlyData () {
+      let hourlyData = {}
+      if (this.WeatherData) {
+        let hourly = extractData(this.WeatherData.hourly.data, 'temperature', 'time', 'icon')
+        let hourlyTemperature = []
+        for (let i = 0; i < hourly.temperature.length; i++) {
+          hourlyTemperature.push({
+            icon: iconMap[hourly.icon[i]],
+            y: hourly.temperature[i]
+          })
+        }
+        let hourlyLabel = hourly.time.map(i => new Date(i * 1000).toLocaleTimeString().replace(/:00 /, ' '))
+
+        let minTemp = Math.min.apply(null, hourly.temperature)
+
+        let series = [{
+          type: 'area',
+          name: 'Temperature',
+          color: 'rgba(75,192,192,1)',
+          marker: {
+            enabled: false
+          },
+          data: hourlyTemperature
+        }]
+
+        hourlyData.hourlyLabel = hourlyLabel
+        hourlyData.series = series
+        hourlyData.min = minTemp - 1
+      }
+      return hourlyData
+     
+    },
+    chartOptions () {
+      let options = {
         credits: {
           enabled: false
         },
@@ -59,37 +95,11 @@ export default {
         },
         series: null
       }
+      options.xAxis.categories = this.hourlyData.hourlyLabel
+      options.series = this.hourlyData.series
+      options.yAxis.min = this.hourlyData.min
+      return options
     }
-  },
-  mounted () {
-    this.$store.dispatch('getWeatherData')
-      .then(response => {
-        let hourly = extractData(response.hourly.data, 'temperature', 'time', 'icon')
-        let hourlyTemperature = []
-        for (let i = 0; i < hourly.temperature.length; i++) {
-          hourlyTemperature.push({
-            icon: iconMap[hourly.icon[i]],
-            y: hourly.temperature[i]
-          })
-        }
-        let hourlyLabel = hourly.time.map(i => new Date(i * 1000).toLocaleTimeString().replace(/:00 /, ' '))
-
-        let minTemp = Math.min.apply(null, hourly.temperature)
-
-        let series = [{
-          type: 'area',
-          name: 'Temperature',
-          color: 'rgba(75,192,192,1)',
-          marker: {
-            enabled: false
-          },
-          data: hourlyTemperature
-        }]
-
-        this.chartOptions.xAxis.categories = hourlyLabel
-        this.chartOptions.series = series
-        this.chartOptions.yAxis.min = minTemp - 1
-      })
   }
 }
 </script>
