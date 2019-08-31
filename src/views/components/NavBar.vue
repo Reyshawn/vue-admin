@@ -106,6 +106,7 @@ export default {
 .nav-item {
   height: 100%;
   cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .nav-item:hover {

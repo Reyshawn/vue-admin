@@ -10,7 +10,7 @@
         </router-link>
       </li>
       <li class="menu-item _dropdown">
-        <div class="menu-title-wrapper" @click="active = !active">
+        <div class="menu-title-wrapper" @click="toggleDropdown">
           <span class="icon">
             <i class="fas fa-angle-double-right"></i>
           </span>
@@ -72,6 +72,21 @@ export default {
     ...mapGetters([
       'componentRoutes'
     ])
+  },
+  methods: {
+    toggleDropdown (e) {
+      e.stopPropagation()
+      this.active = !this.active
+      if (this.active) {
+        window.addEventListener('click', () => {
+          this.active = false
+        })
+      } else {
+        window.removeEventListener('click', () => {
+          this.active = false
+        })
+      }
+    }
   }
 }
 </script>
