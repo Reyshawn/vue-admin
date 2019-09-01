@@ -48,9 +48,9 @@ export default {
   mounted () {
     this.$store.dispatch('getWeatherData')
       .then(response => {
-        this.WeatherData = response;
+        this.WeatherData = response
         console.log(this.WeatherData)
-    })
+      })
   }
 }
 </script>

@@ -36,7 +36,7 @@ export default {
         data.humidity = this.WeatherData.currently.humidity
         data.cloudCover = this.WeatherData.currently.cloudCover
       }
-      return data;
+      return data
     },
     chartOptions () {
       let options = {
@@ -137,6 +137,11 @@ export default {
           }]
         }]
       }
+
+      options.series[0].data[0].value = this.chartData.uvIndex
+      options.series[1].data[0].value = this.chartData.humidity
+      options.series[2].data[0].value = this.chartData.cloudCover
+
       return options
     }
   }

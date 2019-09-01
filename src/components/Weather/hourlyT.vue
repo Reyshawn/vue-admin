@@ -44,7 +44,6 @@ export default {
         hourlyData.min = minTemp - 1
       }
       return hourlyData
-     
     },
     chartOptions () {
       let options = {

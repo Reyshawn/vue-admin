@@ -8,6 +8,11 @@ module.exports = {
       '/forecast': {
         target: 'https://api.darksky.net/',
         changeOrigin: true
+      },
+      '/geocoding': {
+        target: 'http://www.mapquestapi.com/geocoding/v1/',
+        changeOrigin: true,
+        pathRewrite: { '^/geocoding': '' }
       }
     }
   }
