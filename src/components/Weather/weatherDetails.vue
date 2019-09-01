@@ -4,14 +4,14 @@
       <span class="icon is-small is-left">
           <i class="fas fa-search"></i>
       </span>
-      <input type="text" placeholder="Search place..." v-model="place"
-        @keyup.enter="updateDetails"
+      <input type="text" placeholder="Search place..." v-model="newPlace"
+        @keyup.enter="changePlace"
       >
     </div>
     <div class="main-content">
       <p class="time">
          <i class="wi" :class="details.icon"></i>
-        {{ formatTime }}
+        {{ details.formatTime }}
       </p>
       <div class="current-temperature">
         <p> {{details.temperature}} </p>
@@ -57,7 +57,7 @@
           <span class="icon is-small is-left">
             <i class="fas fa-calendar-alt"></i>
           </span>
-          {{date}}
+          {{details.date}}
         </p>
       </div>
       <div class="location">
@@ -65,10 +65,10 @@
           <span class="icon is-small is-left">
             <i class="fas fa-map-marker-alt"></i>
           </span>
-          Shenzhen, China
+          {{ Place }}
         </p>
-        <p class="coordinates">Lat: 43°38'19.39" N</p>
-        <p class="coordinates">Long: 116°14'28.86" W</p>
+        <p class="coordinates">Lat: {{DMS[0]}}</p>
+        <p class="coordinates">Long: {{DMS[1]}}</p>
       </div>
     </div>
   </div>
@@ -76,18 +76,20 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { iconMap } from './utils'
+import { iconMap, latlng2DMS } from './utils'
 
 export default {
   name: 'weather-details',
   data () {
     return {
-      place: ''
+      newPlace: ''
     }
   },
   computed: {
     ...mapGetters({
-      WeatherData: 'WeatherData'
+      WeatherData: 'WeatherData',
+      Place: 'Place',
+      Coord: 'Coord'
     }),
     details () {
       let details = {}
@@ -101,14 +103,22 @@ export default {
         details.dewPoint = this.WeatherData.currently.dewPoint
         details.pressure = this.WeatherData.currently.pressure
         details.ozone = this.WeatherData.currently.ozone
+        details.date = new Date(details.time * 1000).toDateString()
+        details.formatTime = new Date(details.time * 1000).toLocaleTimeString().slice(0, 18)
       }
       return details
     },
-    date () {
-      return this.time && new Date(this.time * 1000).toDateString()
-    },
-    formatTime () {
-      return this.time && new Date(this.time * 1000).toLocaleTimeString().slice(0, 18)
+    DMS () {
+      if (this.Coord) {
+        return latlng2DMS(this.Coord.lat, this.Coord.lng)
+      } else {
+        return ['', '']
+      }
+    }
+  },
+  methods: {
+    changePlace () {
+      this.$store.dispatch('getWeatherData', this.newPlace)
     }
   }
 

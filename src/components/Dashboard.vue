@@ -40,15 +40,9 @@ export default {
     windStatus,
     airVisibility
   },
-  data () {
-    return {
-      WeatherData: null
-    }
-  },
   mounted () {
     this.$store.dispatch('getWeatherData')
       .then(response => {
-        this.WeatherData = response
         console.log(this.WeatherData)
       })
   }
