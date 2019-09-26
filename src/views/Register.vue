@@ -1,26 +1,31 @@
 <template>
-  <div class="register-container columns is-centered">
-    <div class="register-form column is-3">
-      <h1 class="title">Register Form</h1>
+  <div class="register-container">
+    <div class="register-form">
+      <div class="login-or-register">
+        <router-link to='/login'>Login</router-link>
+        " or "
+        <router-link to='/register'>Register</router-link>
+      </div>
       <form @submit.prevent="register">
         <div class="field">
-          <label for="username"></label>
-          <input type="text" name="username" class="input is-small" placeholder="Username" v-model="username">
+          <label for="username">Username</label>
+          <input type="text" name="username" placeholder="Username" v-model="username">
         </div>
         <div class="field">
-          <label for="email"></label>
-          <input type="email" name="email" class="input is-small" placeholder="Email" v-model="email">
+          <label for="email">Email Address</label>
+          <input type="email" name="email" placeholder="Email" v-model="email">
         </div>
         <div class="field">
-          <label for="password"></label>
-          <input type="password" name="password" class="input is-small" placeholder="Password" v-model="password">
+          <label for="password">Password</label>
+          <input type="password" name="password" placeholder="Password" v-model="password">
         </div>
         <div class="field">
-          <label for="password_2"></label>
-          <input type="password" name="password_2" class="input is-small" placeholder="Repeat the password" v-model="password_2">
+          <label for="password_2">Repeat Password</label>
+          <input type="password" name="password_2" placeholder="Repeat the password" v-model="password_2">
         </div>
-        <router-link to="/login"><button class="button">Login</button></router-link>
-        <button type='submit' class="button">Register</button>
+        <div class="form-submit">
+          <button type='submit' class="button">Register</button>
+        </div>
       </form>
     </div>
   </div>
@@ -83,17 +88,57 @@ export default {
 .register-container {
   height: 100%;
   width: 100%;
-  background-color: #293462;
   margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #293462;
 }
 
 .register-form {
-  margin-top: 200px;
+  max-width: 800px;
+  margin: 200px 30%;
+  color: #293462;
+  background-color: #fff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.register-form form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.login-or-register {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+
+.form-submit {
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px 0;
+  align-items: center;
+}
+
+input {
+  width: 100%;
+  margin: 5px 0;
+  font-size: .8em;
+  border: none;
+  border-bottom: 1px solid #293462;
+  outline: none;
 }
 
 .button {
   width: 100px;
-  margin: 0 20px 0 0;
+  margin: 0;
   border: none;
   color: #fff1c1;
   background-color: #293462;
@@ -102,10 +147,6 @@ export default {
 
 .button:hover {
   background-color: #242e58;
-  color: #fff1c1;
-}
-
-h1.title {
   color: #fff1c1;
 }
 

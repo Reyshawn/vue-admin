@@ -1,16 +1,21 @@
 <template>
-  <div class="login-container columns is-centered">
-    <div class="login-form column is-3">
-      <h1 class="title">Login Form</h1>
+  <div class="login-container">
+    <div class="login-form">
+      <div class="login-or-register">
+        <router-link to='/login'>Login</router-link>
+        " or "
+        <router-link to='/register'>Register</router-link>
+      </div>
       <form @submit.prevent="login">
-        <div class="field">
-           <input type="email" class="input is-small" placeholder="Email" v-model="email">
+        <label for="email">Email Adress</label>
+        <input class="login-input" type="email" placeholder="Email" v-model="email">
+        <label for="password">Password</label>
+        <input class="login-input" type="password" placeholder="Password" v-model="password">
+        <div class="form-submit">
+          <input id='chkbox' type="checkbox">
+          <label for="chkbox">Remember me</label>
+          <button type="submit" class="button">Login</button>
         </div>
-        <div class="field">
-           <input type="password" class="input is-small" placeholder="Password" v-model="password">
-        </div>
-        <button type="submit" class="button">Login</button>
-        <router-link to='/register'><button class="button">Register</button></router-link>
       </form>
     </div>
   </div>
@@ -53,20 +58,65 @@ export default {
 </script>
 
 <style scoped>
+
 .login-container {
   height: 100%;
   width: 100%;
-  background-color: #293462;
   margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #293462;
 }
 
 .login-form {
-  margin-top: 200px;
+  max-width: 800px;
+  margin: 200px 30%;
+  color: #293462;
+  background-color: #fff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.login-or-register {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+
+.login-input {
+  width: 100%;
+  margin: 5px 0;
+  font-size: .8em;
+  border: none;
+  border-bottom: 1px solid #293462;
+  outline: none;
+}
+
+.form-submit {
+  display: flex;
+  margin: 10px 0;
+  align-items: center;
+}
+
+.form-submit label {
+  margin-left: 10px;
+  margin-right: auto;
 }
 
 .button {
   width: 100px;
-  margin: 0 20px 0 0;
+  margin: 0;
   border: none;
   color: #fff1c1;
   background-color: #293462;
@@ -75,10 +125,6 @@ export default {
 
 .button:hover {
   background-color: #242e58;
-  color: #fff1c1;
-}
-
-h1.title {
   color: #fff1c1;
 }
 
