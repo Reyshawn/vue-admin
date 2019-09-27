@@ -22,13 +22,13 @@
 </template>
 
 <script>
-import dailyT from './Weather/dailyT'
-import hourlyT from './Weather/hourlyT'
+import dailyT from './dailyT'
+import hourlyT from './hourlyT'
 
-import uvIndex from './Weather/uvIndex'
-import weatherDetails from './Weather/weatherDetails'
-import windStatus from './Weather/windStatus'
-import airVisibility from './Weather/airVisibility'
+import uvIndex from './uvIndex'
+import weatherDetails from './weatherDetails'
+import windStatus from './windStatus'
+import airVisibility from './airVisibility'
 
 export default {
   name: 'dashboard',
