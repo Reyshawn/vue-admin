@@ -71,7 +71,6 @@ export default {
 
         this.$store.dispatch('register', info)
           .then(response => {
-            console.log(response)
             this.$store.dispatch('pushMessage', {
               type: 'success',
               msg: '❤️ Register succeeded.'
