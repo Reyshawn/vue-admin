@@ -54,6 +54,7 @@ const actions = {
       axios.get('/auth/logout')
         .then(response => {
           removeToken()
+          commit('SET_TOKEN', '')
           resolve(response.data)
         })
         .catch(err => {

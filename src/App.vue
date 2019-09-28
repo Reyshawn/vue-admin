@@ -1,17 +1,21 @@
 <template>
   <div id="app">
     <notification />
-    <router-view/>
+    <Layout>
+      <router-view/>
+    </Layout>
   </div>
 </template>
 
 <script>
 import Notification from '@/components/Notification'
+import Layout from '@/views/Layout'
 
 export default {
   name: 'App',
   components: {
-    Notification
+    Notification,
+    Layout
   }
 }
 </script>

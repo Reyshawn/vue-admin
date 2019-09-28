@@ -6,6 +6,30 @@ Vue.use(Router)
 
 export const permissionRoutes = [
   {
+    path: '/about',
+    name: 'about',
+    component: () => import('@/views/About'),
+    meta: {
+      roles: ['visiter']
+    }
+  },
+  {
+    path: '/weather',
+    name: 'Weather',
+    component: () => import('@/components/Weather'),
+    meta: {
+      roles: ['visiter']
+    }
+  },
+  {
+    path: '/backToTop',
+    name: 'BackToTop',
+    component: () => import('@/components/BackToTop'),
+    meta: {
+      roles: ['visiter']
+    }
+  },
+  {
     path: '/visiter',
     name: 'Visiter',
     component: () => import('@/components/Permission/visiterPermission'),
@@ -26,31 +50,8 @@ export const permissionRoutes = [
 export const routes = [
   {
     path: '/',
-    name: 'layout',
-    component: () => import('@/views/Layout'),
-    children: [
-      {
-        path: '/about',
-        name: 'about',
-        component: () => import('@/views/About')
-      },
-      {
-        path: '/weather',
-        name: 'Weather',
-        component: () => import('@/components/Weather'),
-        meta: {
-          requiresAuth: true
-        }
-      },
-      {
-        path: '/backToTop',
-        name: 'BackToTop',
-        component: () => import('@/components/BackToTop'),
-        meta: {
-          requiresAuth: true
-        }
-      }
-    ]
+    name: 'Home',
+    component: () => import('@/components/Home'),
   },
   {
     path: '/login',
@@ -71,10 +72,10 @@ const router = new Router({
 })
 
 router.beforeEach(async (to, from, next) => {
-  if (from.path === '/login') next()
-  const token = localStorage.getItem('access_token') || sessionStorage.getItem('access_token')
+  const token = Store.getters.token
+  console.log('what? ', token)
   if (token) {
-    if (to.path === '/login') {
+    if (to.path === '/login' || to.path === '/register') {
       next('/')
     } else {
       const roles = Store.getters.roles
@@ -84,10 +85,8 @@ router.beforeEach(async (to, from, next) => {
         try {
           const { roles } = await Store.dispatch('getInfo')  
           const accessedRoutes = await Store.dispatch('generateRoutes', roles)
-          console.log('accessedRoutes', accessedRoutes)
-          console.log('children before', router.options.routes[0].children)
+
           router.addRoutes(accessedRoutes)
-          //console.log('children after', router.options.routes[0].children)
           next()
         } catch (e) {
           console.log(e)

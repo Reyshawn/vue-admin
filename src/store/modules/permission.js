@@ -1,4 +1,4 @@
-import { permissionRoutes, routes } from '@/router'
+import { permissionRoutes } from '@/router'
 
 const state = {
   dynamicRoutes: []
@@ -6,7 +6,7 @@ const state = {
 
 const mutations = {
   SET_ROUTES (state, accessedRoutes) {
-    state.dynamicRoutes = routes[0].children.concat(accessedRoutes)
+    state.dynamicRoutes =accessedRoutes
   }
 }
 
@@ -14,8 +14,6 @@ const actions = {
   generateRoutes ({ commit }, roles) {
     return new Promise((resolve, reject) => {
       let accessedRoutes
-      console.log('routes', routes)
-      console.log('permissionRoutes', permissionRoutes)
       if (roles.includes('admin')) {
         accessedRoutes = permissionRoutes || []
       } else {

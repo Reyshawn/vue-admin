@@ -7,7 +7,7 @@
           <i class="icon fas fa-bars"></i>
         </div>
       </NavBar>
-      <router-view></router-view>
+      <slot></slot>
     </div>
   </div>
 </template>
