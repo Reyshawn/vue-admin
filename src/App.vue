@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <notification />
-    <Layout>
+    <Layout v-if="!_route.meta.entry">
       <router-view/>
     </Layout>
+    <router-view v-else />
   </div>
 </template>
 
@@ -16,6 +17,11 @@ export default {
   components: {
     Notification,
     Layout
+  },
+  computed: {
+    _route () {
+      return this.$route
+    }
   }
 }
 </script>

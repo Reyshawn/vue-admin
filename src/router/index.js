@@ -56,12 +56,18 @@ export const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/views/Login')
+    component: () => import('@/views/Login'),
+    meta: {
+      entry: true
+    }
   },
   {
     path: '/register',
     name: 'register',
-    component: () => import('@/views/Register')
+    component: () => import('@/views/Register'),
+    meta: {
+      entry: true
+    }
   }
 ]
 
@@ -73,7 +79,6 @@ const router = new Router({
 
 router.beforeEach(async (to, from, next) => {
   const token = Store.getters.token
-  console.log('what? ', token)
   if (token) {
     if (to.path === '/login' || to.path === '/register') {
       next('/')
