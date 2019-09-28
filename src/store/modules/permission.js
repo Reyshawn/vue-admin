@@ -6,7 +6,7 @@ const state = {
 
 const mutations = {
   SET_ROUTES (state, accessedRoutes) {
-    state.dynamicRoutes =accessedRoutes
+    state.dynamicRoutes = accessedRoutes
   }
 }
 

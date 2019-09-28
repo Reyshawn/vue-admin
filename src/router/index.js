@@ -51,7 +51,7 @@ export const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('@/components/Home'),
+    component: () => import('@/components/Home')
   },
   {
     path: '/login',
@@ -83,7 +83,7 @@ router.beforeEach(async (to, from, next) => {
         next()
       } else {
         try {
-          const { roles } = await Store.dispatch('getInfo')  
+          const { roles } = await Store.dispatch('getInfo')
           const accessedRoutes = await Store.dispatch('generateRoutes', roles)
 
           router.addRoutes(accessedRoutes)

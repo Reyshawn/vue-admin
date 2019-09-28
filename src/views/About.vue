@@ -6,8 +6,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'About',
   methods: {
@@ -17,7 +15,6 @@ export default {
       const accessedRoutes = await this.$store.dispatch('generateRoutes', roles)
       console.log('accessedRoutes about ', accessedRoutes) */
       return 0
-
     }
   }
 
