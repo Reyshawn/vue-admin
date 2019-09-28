@@ -17,7 +17,7 @@
           <a class="menu-title">Permission</a>
         </div>
         <ul class="_dropdown-menu" v-if="active">
-          <li v-for="route in permissionRoutes" :key=route.path class="menu-item">
+          <li v-for="route in dynamicRoutes" :key=route.path class="menu-item">
             <router-link :to="route.path" class="menu-title-wrapper">
               <span class="icon">
                 <i class="fas fa-angle-double-right"></i>
@@ -57,18 +57,22 @@
 
 <script>
 
-import { permissionRoutes } from '@/router'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'sidebar',
   data () {
     return {
-      active: false,
-      permissionRoutes: permissionRoutes
+      active: false
     }
   },
   props: {
     closed: Boolean
+  },
+  computed: {
+    ...mapGetters([
+      'dynamicRoutes'
+    ])
   },
   methods: {
     toggleDropdown (e) {
