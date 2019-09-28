@@ -1,7 +1,8 @@
 import axios from 'axios'
+import { getToken, removeToken } from '@/utils/auth'
 
 const state = {
-  token: '',
+  token: getToken() || '',
   name: '',
   avatar: '',
   introduction: '',
@@ -35,7 +36,6 @@ const actions = {
             if (data.rememberMe) localStorage.setItem('access_token', response.data.token)
             else sessionStorage.setItem('access_token', response.data.token)
             commit('SET_TOKEN', response.data.token)
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token
             resolve(response.data)
           }
         })
@@ -53,9 +53,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       axios.get('/auth/logout')
         .then(response => {
-          sessionStorage.removeItem('access_token')
-          localStorage.removeItem('access_token')
-          delete axios.defaults.headers.common['Authorization']
+          removeToken()
           resolve(response.data)
         })
         .catch(err => {
@@ -81,13 +79,15 @@ const actions = {
     })
   },
 
-  getInfo ({ dispatch, commit }, email) {
-    console.log(`/user?email=${email}`)
+  getInfo ({ dispatch }, email) {
     return new Promise((resolve, reject) => {
-      axios.get(`/user?email=${email}`)
+      axios.get('/auth/user', {
+        headers: {
+          Authorization: 'Bearer ' + getToken()
+        }
+      })
         .then(response => {
-          console.log(response)
-          resolve(response)
+          resolve(response.data)
         })
         .catch(err => {
           dispatch('pushMessage', {
@@ -101,14 +101,13 @@ const actions = {
 }
 
 const getters = {
-  token: state => state.token
+  token: state => state.token,
+  roles: state => state.roles
 }
 
-const userModule = {
+export default {
   state,
   mutations,
   actions,
   getters
 }
-
-export default userModule

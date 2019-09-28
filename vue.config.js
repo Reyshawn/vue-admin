@@ -5,10 +5,6 @@ module.exports = {
         target: 'http://localhost:3000',
         changeOrigin: true
       },
-      '/user': {
-        target: 'http://localhost:3000',
-        changeOrigin: true
-      },
       '/forecast': {
         target: 'https://api.darksky.net/',
         changeOrigin: true

@@ -2,11 +2,11 @@
   <nav id="sidebar">
     <ul>
       <li class="menu-item">
-        <router-link to="/dashboard" class="menu-title-wrapper">
+        <router-link to="/weather" class="menu-title-wrapper">
           <span class="icon">
             <i class="fas fa-tachometer-alt"></i>
           </span>
-          <p class="menu-title">Dashboard</p>
+          <p class="menu-title">Weather</p>
         </router-link>
       </li>
       <li class="menu-item _dropdown">
@@ -14,10 +14,10 @@
           <span class="icon">
             <i class="fas fa-angle-double-right"></i>
           </span>
-          <a class="menu-title">Components</a>
+          <a class="menu-title">Permission</a>
         </div>
         <ul class="_dropdown-menu" v-if="active">
-          <li v-for="route in componentRoutes" :key=route.path class="menu-item">
+          <li v-for="route in permissionRoutes" :key=route.path class="menu-item">
             <router-link :to="route.path" class="menu-title-wrapper">
               <span class="icon">
                 <i class="fas fa-angle-double-right"></i>
@@ -56,22 +56,19 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+
+import { permissionRoutes } from '@/router'
 
 export default {
   name: 'sidebar',
   data () {
     return {
-      active: false
+      active: false,
+      permissionRoutes: permissionRoutes
     }
   },
   props: {
     closed: Boolean
-  },
-  computed: {
-    ...mapGetters([
-      'componentRoutes'
-    ])
   },
   methods: {
     toggleDropdown (e) {

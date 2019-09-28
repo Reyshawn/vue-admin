@@ -12,7 +12,7 @@
         <label for="password">Password</label>
         <input class="login-input" type="password" placeholder="Password" v-model="password">
         <div class="form-submit">
-          <input id='chkbox' type="checkbox">
+          <input id='chkbox' type="checkbox" v-model="rememberMe">
           <label for="chkbox">Remember me</label>
           <button type="submit" class="button">Login</button>
         </div>
@@ -27,7 +27,8 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      rememberMe: false
     }
   },
   methods: {
@@ -41,10 +42,10 @@ export default {
       if (this.$store.getters.Messages.length === 0) {
         let info = {
           email: this.email,
-          password: this.password
+          password: this.password,
+          rememberMe: this.rememberMe
         }
         this.$store.dispatch('login', info).then(response => {
-          console.log('login:', response)
           this.$store.dispatch('pushMessage', {
             type: 'success',
             msg: '❤️ Logged in success!'

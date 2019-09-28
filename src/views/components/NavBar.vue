@@ -12,8 +12,12 @@
           </transition>
         </div>
       <ul class="slot-right">
-        <li class="nav-item"><router-link to="/">Home</router-link></li>
-        <li class="nav-item"><router-link to="/about">About</router-link></li>
+        <router-link to="/">
+          <li class="nav-item">Home</li>
+        </router-link>
+        <router-link to="/about">
+          <li class="nav-item">About</li>
+        </router-link>
         <li class="user-profile nav-item">
           <div class="_dropdown" @click="toggleDropdown">
             <img src="@/assets/user.jpg" alt="user-alias">
