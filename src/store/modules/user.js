@@ -55,6 +55,7 @@ const actions = {
         .then(response => {
           removeToken()
           commit('SET_TOKEN', '')
+          commit('SET_ROUTES', [])
           resolve(response.data)
         })
         .catch(err => {
