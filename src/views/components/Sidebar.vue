@@ -2,9 +2,9 @@
   <nav id="sidebar">
     <ul class="sidebar-wrapper">
       <li v-for="route in dynamicRoutes" :key=route.path class="menu-item">
-        <router-link 
+        <router-link
           v-if="typeof route.children === 'undefined'"
-          :to="route.path" 
+          :to="route.path"
           class="menu-title-wrapper"
           :class="{currentRoute: $route.path===route.path}"
         >
@@ -47,7 +47,7 @@ export default {
   name: 'sidebar',
   data () {
     return {
-      
+
     }
   },
   props: {
@@ -64,7 +64,7 @@ export default {
       e.stopPropagation()
       console.log(this.submenu)
       this.submenu[name] = !this.submenu[name]
-     /*  if (this.submenu[name]) {
+      /*  if (this.submenu[name]) {
         window.addEventListener('click', () => {
           this.submenu[name] = false
         })
@@ -136,7 +136,6 @@ export default {
   font-size: .9em;
   padding-left: 12px;
 }
-
 
 .collapse ._dropdown-menu {
   background-color: #293462;

@@ -162,7 +162,7 @@ router.beforeEach(async (to, from, next) => {
           if (Store.getters.dynamicRoutes.length === 0) {
             const accessedRoutes = await Store.dispatch('generateRoutes', roles)
             router.addRoutes(accessedRoutes)
-          }  
+          }
           next()
         } catch (e) {
           next(`/login?redirect=${to.path}`)
