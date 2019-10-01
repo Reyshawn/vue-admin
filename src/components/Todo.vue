@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>This is Home1</p>
+    <p>This is Todo app</p>
   </div>
 </template>
 

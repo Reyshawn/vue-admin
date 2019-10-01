@@ -1,14 +1,6 @@
 <template>
   <nav id="sidebar">
     <ul class="sidebar-wrapper">
-      <li class="menu-item">
-        <router-link to="/weather" class="menu-title-wrapper">
-          <span class="icon">
-            <i class="fas fa-tachometer-alt"></i>
-          </span>
-          <p class="menu-title">Weather</p>
-        </router-link>
-      </li>
       <li v-for="route in dynamicRoutes" :key=route.path class="menu-item">
         <router-link 
           v-if="typeof route.children === 'undefined'"
@@ -16,60 +8,27 @@
           class="menu-title-wrapper"
         >
           <span class="icon">
-            <i class="fas fa-angle-double-right"></i>
+            <i :class="[route.meta.icon]"></i>
           </span>
           <p class="menu-title">{{ route.name }}</p>
         </router-link>
         <div v-else>
-          <div class="menu-title-wrapper" @click="toggleDropdown(route.name)">
+          <div class="menu-title-wrapper" @click="toggleDropdown($event, route.name)">
             <span class="icon">
-              <i class="fas fa-angle-double-right"></i>
+              <i :class="[route.meta.icon]"></i>
             </span>
             <a class="menu-title">{{route.name}}</a>
           </div>
           <ul class="_dropdown-menu" v-if="submenu[route.name]">
             <li class="menu-title-wrapper submenu" v-for="subRoute in route.children" :key="subRoute.path">
               <span class="icon">
-                <i class="fas fa-angle-double-right"></i>
+                <i :class="[subRoute.meta.icon]"></i>
               </span>
               <router-link :to="subRoute.path" class="menu-title submenu-title">{{subRoute.name}}</router-link>
             </li>
           </ul>
         </div>
       </li>
-
-      <!-- <li class="menu-item _dropdown">
-        <div class="menu-title-wrapper" @click="toggleDropdown">
-          <span class="icon">
-            <i class="fas fa-angle-double-right"></i>
-          </span>
-          <a class="menu-title">Permission</a>
-        </div>
-        <ul class="_dropdown-menu" v-if="active">
-          
-        </ul>
-      </li> -->
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
-      <li class="menu-title-wrapper">test</li>
     </ul>
   </nav>
 </template>
@@ -95,9 +54,19 @@ export default {
     ])
   },
   methods: {
-    toggleDropdown (name) {
+    toggleDropdown (e, name) {
+      e.stopPropagation()
       console.log(this.submenu)
       this.submenu[name] = !this.submenu[name]
+      if (this.submenu[name]) {
+        window.addEventListener('click', () => {
+          this.submenu[name] = false
+        })
+      } else {
+        window.removeEventListener('click', () => {
+          this.submenu[name] = false
+        })
+      }
     }
   }
 }

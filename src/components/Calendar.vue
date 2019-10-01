@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-view />
+    <p>This is Calendar App</p>
   </div>
 </template>
 

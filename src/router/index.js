@@ -3,97 +3,113 @@ import Store from '@/store'
 import Router from 'vue-router'
 
 import Submenu from '@/components/Submenu'
-import Home1 from '@/components/Home1'
-import Home2 from '@/components/Home2'
-import Home3 from '@/components/Home3'
-
-import Layout from '@/views/Layout'
 
 Vue.use(Router)
 
 export const permissionRoutes = [
   {
-    path: '/about',
-    name: 'about',
-    component: () => import('@/views/About'),
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: () => import('@/components/Dashboard'),
     meta: {
-      roles: ['visiter']
-    }
-  },
-  {
-    path: '/weather',
-    name: 'Weather',
-    component: () => import('@/components/Weather'),
-    meta: {
-      roles: ['visiter']
-    }
-  },
-  {
-    path: '/backToTop',
-    name: 'BackToTop',
-    component: () => import('@/components/BackToTop'),
-    meta: {
-      roles: ['visiter']
-    }
-  },
-  {
-    path: '/visiter',
-    name: 'Visiter',
-    component: () => import('@/components/Permission/visiterPermission'),
-    meta: {
-      roles: ['visiter']
-    }
-  },
-  {
-    path: '/admin',
-    name: 'Admin',
-    component: () => import('@/components/Permission/adminPermission'),
-    meta: {
-      roles: ['admin']
+      icon: 'fab fa-cloudscale',
+      roles: ['visitor']
     }
   },
   {
     path: '',
-    name: 'Components',
+    name: 'Permission',
     component: Submenu,
     meta: {
-      roles: ['visiter']
+      icon: 'fas fa-user-lock',
+      roles: ['visitor']
     },
     children: [
       {
-        path: '/components1.1',
-        name: 'sub1',
-        component: Home1,
+        path: '/visitor',
+        name: 'Visitor',
+        component: () => import('@/components/Permission/visitorPermission'),
         meta: {
-          roles: ['visiter']
-        },
+          icon: 'fas fa-user-cog',
+          roles: ['visitor']
+        }
+      },
+      {
+        path: '/admin',
+        name: 'Admin',
+        component: () => import('@/components/Permission/adminPermission'),
+        meta: {
+          icon: 'fas fa-user-cog',
+          roles: ['admin']
+        }
+      }
+    ]
+  },
+  {
+    path: '',
+    name: 'Apps',
+    component: Submenu,
+    meta: {
+      icon: 'fab fa-app-store',
+      roles: ['visitor']
+    },
+    children: [
+      {
+        path: '/weather',
+        name: 'Weather',
+        component: () => import('@/components/Weather'),
+        meta: {
+          icon: 'fab fa-cloudversify',
+          roles: ['visitor']
+        }
+      },
+      {
+        path: '/todo',
+        name: 'Todo',
+        component: () => import('@/components/Todo'),
+        meta: {
+          icon: 'fas fa-check',
+          roles: ['visitor']
+        }
+      },
+      {
+        path: '/calendar',
+        name: 'Calendar',
+        component: () => import('@/components/Calendar'),
+        meta: {
+          icon: 'fas fa-calendar-alt',
+          roles: ['visitor']
+        }
+      },
+      {
+        path: '/notes',
+        name: 'Notes',
+        component: () => import('@/components/Notes'),
+        meta: {
+          icon: 'fas fa-clipboard',
+          roles: ['visitor']
+        }
       }
     ]
 
   },
   {
     path: '',
-    name: 'Components2',
+    name: 'Components',
     component: Submenu,
     meta: {
-      roles: ['visiter']
+      icon: 'fas fa-compact-disc',
+      roles: ['visitor']
     },
     children: [
       {
-        path: '/components2.1',
-        name: 'sub2',
-        component: Home2,
+        path: '/backToTop',
+        name: 'BackToTop',
+        component: () => import('@/components/BackToTop'),
         meta: {
-          roles: ['visiter']
-        },
-      },
-      {
-        path: '/components2.2',
-        name: 'sub3',
-        component: Home3,
-        meta: {
-          roles: ['visiter']
-        },
+          icon: 'fas fa-chevron-up',
+          roles: ['visitor']
+        }
       }
     ]
 
@@ -104,7 +120,7 @@ export const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('@/components/Home')
+    component: () => import('@/components/Dashboard')
   },
   {
     path: '/login',
