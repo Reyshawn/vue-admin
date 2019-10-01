@@ -1,6 +1,6 @@
 <template>
   <nav id="sidebar">
-    <ul>
+    <ul class="sidebar-wrapper">
       <li class="menu-item">
         <router-link to="/weather" class="menu-title-wrapper">
           <span class="icon">
@@ -9,7 +9,36 @@
           <p class="menu-title">Weather</p>
         </router-link>
       </li>
-      <li class="menu-item _dropdown">
+      <li v-for="route in dynamicRoutes" :key=route.path class="menu-item">
+        <router-link 
+          v-if="typeof route.children === 'undefined'"
+          :to="route.path" 
+          class="menu-title-wrapper"
+        >
+          <span class="icon">
+            <i class="fas fa-angle-double-right"></i>
+          </span>
+          <p class="menu-title">{{ route.name }}</p>
+        </router-link>
+        <div v-else>
+          <div class="menu-title-wrapper" @click="toggleDropdown(route.name)">
+            <span class="icon">
+              <i class="fas fa-angle-double-right"></i>
+            </span>
+            <a class="menu-title">{{route.name}}</a>
+          </div>
+          <ul class="_dropdown-menu" v-if="submenu[route.name]">
+            <li class="menu-title-wrapper submenu" v-for="subRoute in route.children" :key="subRoute.path">
+              <span class="icon">
+                <i class="fas fa-angle-double-right"></i>
+              </span>
+              <router-link :to="subRoute.path" class="menu-title submenu-title">{{subRoute.name}}</router-link>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <!-- <li class="menu-item _dropdown">
         <div class="menu-title-wrapper" @click="toggleDropdown">
           <span class="icon">
             <i class="fas fa-angle-double-right"></i>
@@ -17,40 +46,30 @@
           <a class="menu-title">Permission</a>
         </div>
         <ul class="_dropdown-menu" v-if="active">
-          <li v-for="route in dynamicRoutes" :key=route.path class="menu-item">
-            <router-link :to="route.path" class="menu-title-wrapper">
-              <span class="icon">
-                <i class="fas fa-angle-double-right"></i>
-              </span>
-              <p class="menu-title">{{ route.name }}</p>
-            </router-link>
-          </li>
+          
         </ul>
-      </li>
-      <li class="menu-item">
-        <a class="menu-title-wrapper" href="#">
-          <span class="icon">
-            <i class="fas fa-cubes"></i>
-          </span>
-          <a class="menu-title">Other item</a>
-        </a>
-      </li>
-      <li class="menu-item">
-        <a class="menu-title-wrapper" href="#">
-          <span class="icon">
-            <i class="fas fa-cubes"></i>
-          </span>
-          <a class="menu-title">Other item</a>
-        </a>
-      </li>
-      <li class="menu-item">
-        <a class="menu-title-wrapper" href="#">
-          <span class="icon">
-            <i class="fas fa-cubes"></i>
-          </span>
-          <a class="menu-title">Other item</a>
-        </a>
-      </li>
+      </li> -->
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
+      <li class="menu-title-wrapper">test</li>
     </ul>
   </nav>
 </template>
@@ -63,7 +82,7 @@ export default {
   name: 'sidebar',
   data () {
     return {
-      active: false
+      
     }
   },
   props: {
@@ -71,22 +90,14 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'dynamicRoutes'
+      'dynamicRoutes',
+      'submenu'
     ])
   },
   methods: {
-    toggleDropdown (e) {
-      e.stopPropagation()
-      this.active = !this.active
-      if (this.active) {
-        window.addEventListener('click', () => {
-          this.active = false
-        })
-      } else {
-        window.removeEventListener('click', () => {
-          this.active = false
-        })
-      }
+    toggleDropdown (name) {
+      console.log(this.submenu)
+      this.submenu[name] = !this.submenu[name]
     }
   }
 }
@@ -94,13 +105,28 @@ export default {
 
 <style scoped>
 #sidebar {
+  width: 200px;
+/*   max-width: 200px; */
+  min-height: 100vh;
+  max-height: 100vh;
+
   background-color: #293462;
   display: flex;
   flex-direction: column;
   position: sticky;
   top: 0;
-  overflow: scroll;
+  overflow: visible;
   font-weight: 500;
+
+  transition:width 0.5s;
+}
+
+.sidebar-wrapper {
+  overflow-y: auto;
+}
+
+.collapse #sidebar {
+  width: 52.2px;
 }
 
 .menu-item {
@@ -120,7 +146,7 @@ export default {
 
 /* When collapsed, hidden the text. */
 .collapse #sidebar .menu-title {
-  visibility: hidden;
+  display: none;
 }
 
 .menu-item:hover {
@@ -129,6 +155,28 @@ export default {
 
 #sidebar a {
   color: #fff1c1;
+}
+
+.submenu {
+  font-size: .9em;
+  padding-left: 32px;
+}
+
+.collapse ._dropdown-menu {
+  border-radius: 5px;
+  background-color: #293462;
+  position: absolute;
+  left: 50px;
+  right: -100px;
+  transform: translate(10px, -50px);
+}
+
+.collapse .submenu {
+  padding-left: 0;
+}
+
+.collapse .submenu-title {
+  display: block !important;
 }
 
 </style>
