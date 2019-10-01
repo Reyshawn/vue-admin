@@ -6,13 +6,17 @@
           v-if="typeof route.children === 'undefined'"
           :to="route.path" 
           class="menu-title-wrapper"
+          :class="{currentRoute: $route.path===route.path}"
         >
           <span class="icon">
             <i :class="[route.meta.icon]"></i>
           </span>
           <p class="menu-title">{{ route.name }}</p>
         </router-link>
-        <div v-else>
+        <div v-else
+          @mouseover="if(closed) submenu[route.name]=true"
+          @mouseleave="if(closed) submenu[route.name]=false"
+        >
           <div class="menu-title-wrapper" @click="toggleDropdown($event, route.name)">
             <span class="icon">
               <i :class="[route.meta.icon]"></i>
@@ -20,11 +24,13 @@
             <a class="menu-title">{{route.name}}</a>
           </div>
           <ul class="_dropdown-menu" v-if="submenu[route.name]">
-            <li class="menu-title-wrapper submenu" v-for="subRoute in route.children" :key="subRoute.path">
-              <span class="icon">
-                <i :class="[subRoute.meta.icon]"></i>
-              </span>
-              <router-link :to="subRoute.path" class="menu-title submenu-title">{{subRoute.name}}</router-link>
+            <li class="menu-item submenu" v-for="subRoute in route.children" :key="subRoute.path" :class="{currentRoute: $route.path===subRoute.path}">
+              <router-link :to="subRoute.path" class="menu-title-wrapper">
+                <span class="icon">
+                  <i :class="[subRoute.meta.icon]"></i>
+                </span>
+                <p class="menu-title submenu-title">{{subRoute.name}}</p>
+              </router-link>
             </li>
           </ul>
         </div>
@@ -58,7 +64,7 @@ export default {
       e.stopPropagation()
       console.log(this.submenu)
       this.submenu[name] = !this.submenu[name]
-      if (this.submenu[name]) {
+     /*  if (this.submenu[name]) {
         window.addEventListener('click', () => {
           this.submenu[name] = false
         })
@@ -66,7 +72,7 @@ export default {
         window.removeEventListener('click', () => {
           this.submenu[name] = false
         })
-      }
+      } */
     }
   }
 }
@@ -128,16 +134,17 @@ export default {
 
 .submenu {
   font-size: .9em;
-  padding-left: 32px;
+  padding-left: 12px;
 }
 
+
 .collapse ._dropdown-menu {
-  border-radius: 5px;
   background-color: #293462;
+  box-shadow: 10px 10px 30px 1px rgba(0,0,0,0.5);
   position: absolute;
   left: 50px;
-  right: -100px;
-  transform: translate(10px, -50px);
+  right: -120px;
+  transform: translate(0, -50px);
 }
 
 .collapse .submenu {
@@ -146,6 +153,11 @@ export default {
 
 .collapse .submenu-title {
   display: block !important;
+}
+
+.currentRoute {
+  border-left: 3px solid #fff1c1;
+  background-color: #242e58;
 }
 
 </style>

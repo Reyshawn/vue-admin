@@ -148,28 +148,23 @@ const router = new Router({
 
 router.beforeEach(async (to, from, next) => {
   const token = Store.getters.token
-  console.log('routes', router.options.routes)
   if (token) { // check if logged in
     if (to.path === '/login' || to.path === '/register') {
       next('/')
     } else {
       const roles = Store.getters.roles
-      console.log('roles', roles)
       if (roles.length > 0) {
         next()
       } else {
         try {
-          console.log('here here here')
           const { roles } = await Store.dispatch('getInfo')
 
-          console.log('roles2', roles)
           if (Store.getters.dynamicRoutes.length === 0) {
             const accessedRoutes = await Store.dispatch('generateRoutes', roles)
             router.addRoutes(accessedRoutes)
           }  
           next()
         } catch (e) {
-          console.log(e)
           next(`/login?redirect=${to.path}`)
         }
       }
