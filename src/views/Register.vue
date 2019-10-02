@@ -3,8 +3,8 @@
     <div class="register-form">
       <div class="login-or-register">
         <router-link to='/login'>Login</router-link>
-        " or "
-        <router-link to='/register'>Register</router-link>
+        <p class="dividend">or</p>
+        <router-link to='/register' class="currentRoute">Register</router-link>
       </div>
       <form @submit.prevent="register">
         <div class="field">
@@ -105,6 +105,8 @@ export default {
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+
+  box-shadow: 10px 10px 30px 1px rgba(0,0,0,0.5);
 }
 
 .register-form form {
@@ -117,6 +119,11 @@ export default {
   display: flex;
   justify-content: center;
   margin: 10px;
+}
+
+.login-or-register a {
+  color: #293462;
+  font-weight: bold;
 }
 
 .form-submit {
@@ -147,6 +154,14 @@ input {
 .button:hover {
   background-color: #242e58;
   color: #fff1c1;
+}
+
+.dividend {
+  margin: 0 7px;
+}
+
+.currentRoute {
+  border-bottom: 1px solid #293462;
 }
 
 </style>

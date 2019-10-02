@@ -64,15 +64,6 @@ export default {
       e.stopPropagation()
       console.log(this.submenu)
       this.submenu[name] = !this.submenu[name]
-      /*  if (this.submenu[name]) {
-        window.addEventListener('click', () => {
-          this.submenu[name] = false
-        })
-      } else {
-        window.removeEventListener('click', () => {
-          this.submenu[name] = false
-        })
-      } */
     }
   }
 }

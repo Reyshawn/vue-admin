@@ -21,7 +21,7 @@
         </router-link>
         <li class="user-profile nav-item">
           <div class="_dropdown" @click="toggleDropdown">
-            <img src="@/assets/user.jpg" alt="user-alias">
+            <img src="@/assets/user.jpg" alt="user-avatar">
             <ul class="_dropdown-menu" v-if="showDropdown">
               <li class="_dropdown-menu-item"><a>Dashbord</a></li>
               <li class="_dropdown-menu-item"><a>Profile</a></li>

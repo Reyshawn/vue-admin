@@ -28,7 +28,7 @@ export const permissionRoutes = [
       {
         path: '/visitor',
         name: 'Visitor',
-        component: () => import('@/components/Permission/visitorPermission'),
+        component: () => import('@/components/Permission/Visitor'),
         meta: {
           icon: 'fas fa-user-cog',
           roles: ['visitor']
@@ -37,7 +37,7 @@ export const permissionRoutes = [
       {
         path: '/admin',
         name: 'Admin',
-        component: () => import('@/components/Permission/adminPermission'),
+        component: () => import('@/components/Permission/Admin'),
         meta: {
           icon: 'fas fa-user-cog',
           roles: ['admin']
@@ -153,6 +153,7 @@ router.beforeEach(async (to, from, next) => {
       next('/')
     } else {
       const roles = Store.getters.roles
+      console.log('roles', roles)
       if (roles.length > 0) {
         next()
       } else {
