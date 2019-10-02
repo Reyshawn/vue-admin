@@ -17,6 +17,11 @@ const mutations = {
         acc[item] = false
         return acc
       }, {})
+  },
+  RESET_SUBMENU (state) {
+    for (let p in state.submenu) {
+      state.submenu[p] = false
+    }
   }
 }
 
@@ -28,6 +33,11 @@ const actions = {
         accessedRoutes = permissionRoutes || []
       } else {
         accessedRoutes = permissionRoutes.filter((route) => {
+          if (route.children && route.children.length > 0) {
+            route.children = route.children.filter((route) => {
+              return roles.some(role => route.meta.roles.includes(role))
+            })
+          }
           return roles.some(role => route.meta.roles.includes(role))
         })
       }

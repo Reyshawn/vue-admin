@@ -16,12 +16,19 @@
 import Sidebar from './components/Sidebar'
 import NavBar from './components/NavBar'
 
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'layout',
   data () {
     return {
       closed: false
     }
+  },
+  computed: {
+    ...mapGetters([
+      'submenu'
+    ])
   },
   components: {
     Sidebar,
@@ -30,7 +37,9 @@ export default {
   methods: {
     closeSidebar () {
       this.closed = !this.closed
-      this.$emit('toggleSidebar')
+      if (this.closed) {
+        this.$store.commit('RESET_SUBMENU')
+      }
     }
   }
 }
