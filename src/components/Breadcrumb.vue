@@ -18,7 +18,7 @@ export default {
     }
   },
   computed: {
-    breadcrumb() {
+    breadcrumb () {
       return this.$route.matched
     }
   }
@@ -53,6 +53,5 @@ export default {
   display: flex;
   flex-direction: row;
 }
-
 
 </style>

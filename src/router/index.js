@@ -6,7 +6,7 @@ import Submenu from '@/components/Submenu'
 
 Vue.use(Router)
 
-export const permissionRoutes = [
+export const asyncRoutes = [
   {
     path: '/dashboard',
     name: 'Dashboard',
@@ -140,11 +140,13 @@ export const routes = [
   }
 ]
 
-const router = new Router({
+const createRouter = () => new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-})
+});
+
+const router = createRouter()
 
 router.beforeEach(async (to, from, next) => {
   const token = Store.getters.token
@@ -153,26 +155,20 @@ router.beforeEach(async (to, from, next) => {
       next('/')
     } else {
       const roles = Store.getters.roles
-      console.log('roles', roles)
       if (roles.length > 0) {
         next()
       } else {
         try {
           const { roles } = await Store.dispatch('getInfo')
-
-          if (Store.getters.dynamicRoutes.length === 0) {
-            const accessedRoutes = await Store.dispatch('generateRoutes', roles)
-            router.addRoutes(accessedRoutes)
-          }
+          const accessedRoutes = await Store.dispatch('generateRoutes', roles)
+          router.addRoutes(accessedRoutes)
           next()
         } catch (e) {
           next(`/login?redirect=${to.path}`)
         }
       }
-
       next()
     }
-
     next()
   } else {
     if (to.path === '/login' || to.path === '/register') {
@@ -182,5 +178,10 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 })
+
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
 
 export default router

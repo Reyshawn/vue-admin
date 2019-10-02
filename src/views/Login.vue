@@ -50,7 +50,7 @@ export default {
             type: 'success',
             msg: '❤️ Logged in success!'
           })
-          this.$router.push('/')
+          this.$router.push('/dashboard')
         })
       }
     }

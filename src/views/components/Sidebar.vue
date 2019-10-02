@@ -1,7 +1,7 @@
 <template>
   <nav id="sidebar">
     <ul class="sidebar-wrapper">
-      <li v-for="route in dynamicRoutes" :key=route.path class="menu-item">
+      <li v-for="route in dynamicRoutes" :key=route.name class="menu-item">
         <router-link
           v-if="typeof route.children === 'undefined'"
           :to="route.path"
@@ -24,7 +24,7 @@
             <a class="menu-title">{{route.name}}</a>
           </div>
           <ul class="_dropdown-menu" v-if="submenu[route.name]">
-            <li class="menu-item submenu" v-for="subRoute in route.children" :key="subRoute.path" :class="{currentRoute: $route.path===subRoute.path}">
+            <li class="menu-item submenu" v-for="subRoute in route.children" :key="subRoute.name" :class="{currentRoute: $route.path===subRoute.path}">
               <router-link :to="subRoute.path" class="menu-title-wrapper">
                 <span class="icon">
                   <i :class="[subRoute.meta.icon]"></i>
@@ -62,7 +62,6 @@ export default {
   methods: {
     toggleDropdown (e, name) {
       e.stopPropagation()
-      console.log(this.submenu)
       this.submenu[name] = !this.submenu[name]
     }
   }

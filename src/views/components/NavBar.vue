@@ -52,7 +52,6 @@ export default {
     logout () {
       this.$store.dispatch('logout')
         .then(response => {
-          console.log(response)
           this.$store.dispatch('pushMessage', {
             type: 'success',
             msg: '👋🏻 Logged out!'
