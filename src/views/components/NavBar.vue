@@ -3,14 +3,15 @@
       <div class="slot-left">
         <slot></slot>
       </div>
-        <div class="search-container" @mouseover="showSearch=true" @mouseleave="showSearch=false">
-          <i class="icon fas fa-search"></i>
-          <transition name="slide">
-            <span class="search-box" v-if="showSearch">
-              <input type="text" placeholder="Search ...">
-            </span>
-          </transition>
-        </div>
+      <Breadcrumb />
+      <div class="search-container" @mouseover="showSearch=true" @mouseleave="showSearch=false">
+        <i class="icon fas fa-search"></i>
+        <transition name="slide">
+          <span class="search-box" v-if="showSearch">
+            <input type="text" placeholder="Search ...">
+          </span>
+        </transition>
+      </div>
       <ul class="slot-right">
         <router-link to="/">
           <li class="nav-item">Home</li>
@@ -34,8 +35,13 @@
 </template>
 
 <script>
+import Breadcrumb from '@/components/Breadcrumb'
+
 export default {
   name: 'NavBar',
+  components: {
+    Breadcrumb
+  },
   data () {
     return {
       showDropdown: false,
