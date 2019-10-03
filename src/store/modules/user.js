@@ -5,17 +5,7 @@ import { resetRouter } from '@/router'
 
 const state = {
   token: getToken() || '',
-  roles: [],
-  
-  name: '',
-  email: '',
-  gender: '',
-  phone: '',
-  address: '',
-  homepage: '',
-  company: '',
-  education: '',
-  introduction: ''
+  roles: []
 }
 
 const mutations = {
@@ -27,17 +17,6 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
-  },
-  UPDATE_INFO: (state, payload) => {
-    state.name = payload.name
-    state.gender = payload.gender
-    state.phone = payload.phone
-    state.email = payload.email
-    state.address = payload.address
-    state.homepage = payload.homepage
-    state.company = payload.company
-    state.education = payload.education
-    state.introduction = payload.introduction
   }
 }
 
@@ -106,7 +85,6 @@ const actions = {
       })
         .then(response => {
           commit('SET_ROLES', response.data.roles)
-          commit('UPDATE_INFO', response.data)
           resolve(response.data)
         })
         .catch(err => {
@@ -148,16 +126,6 @@ const actions = {
 const getters = {
   token: state => state.token,
   roles: state => state.roles,
-  
-  name: state => state.name,
-  email: state => state.email,
-  gender: state => state.gender,
-  phone: phone => state.phone,
-  address: state => state.address,
-  homepage: state => state.homepage,
-  company: state => state.company,
-  education: state => state.education,
-  introduction: state => state.introduction,
 
 }
 
