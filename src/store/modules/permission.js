@@ -1,6 +1,6 @@
 import { asyncRoutes } from '@/router'
 
-function hasPermission(roles, route) {
+function hasPermission (roles, route) {
   if (route.meta && route.meta.roles) {
     return roles.some(role => route.meta.roles.includes(role))
   } else {
@@ -8,8 +8,7 @@ function hasPermission(roles, route) {
   }
 }
 
-
-function filterAsyncRoutes(routes, roles) {
+function filterAsyncRoutes (routes, roles) {
   const res = []
 
   routes.forEach(route => {
@@ -22,9 +21,8 @@ function filterAsyncRoutes(routes, roles) {
     }
   })
 
-  return res;
+  return res
 }
-
 
 const state = {
   dynamicRoutes: [],

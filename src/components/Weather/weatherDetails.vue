@@ -170,18 +170,16 @@ export default {
 
 .main-content .current-temperature {
   margin: 1px 0;
-  position: relative;
   font-size: 3.5em;
   font-family: 'Avenir' sans-serif;
   font-weight: 600;
+
+  display: flex;
+  align-items: flex-start;
 }
 
 .main-content .celsius {
-  position: absolute;
   color: #ccc;
-  opacity: 0.5;
-  top: 10px;
-  left: 150px;
   font-size: 30px;
 }
 

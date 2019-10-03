@@ -2,7 +2,7 @@
   <div id="app">
     <notification />
     <Layout v-if="!_route.meta.entry">
-      <router-view/>
+      <router-view id="main"/>
     </Layout>
     <router-view v-else />
   </div>
@@ -35,5 +35,10 @@ export default {
   font-family: 'Avenir', sans-serif;
   height: 100vh;
   max-width: 100%;
+}
+
+#main {
+  display: flex;
+  justify-content: center;
 }
 </style>

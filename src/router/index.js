@@ -144,7 +144,7 @@ const createRouter = () => new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-});
+})
 
 const router = createRouter()
 
@@ -179,7 +179,7 @@ router.beforeEach(async (to, from, next) => {
   }
 })
 
-export function resetRouter() {
+export function resetRouter () {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }
