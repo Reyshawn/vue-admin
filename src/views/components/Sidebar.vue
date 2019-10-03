@@ -84,6 +84,8 @@ export default {
   font-weight: 500;
 
   transition:width 0.5s;
+
+  z-index: 999;
 }
 
 .sidebar-wrapper {

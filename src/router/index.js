@@ -149,17 +149,17 @@ const createRouter = () => new Router({
 const router = createRouter()
 
 router.beforeEach(async (to, from, next) => {
-  const token = Store.getters.token
+  const token = Store.getters['user/token']
   if (token) { // check if logged in
     if (to.path === '/login' || to.path === '/register') {
       next('/')
     } else {
-      const roles = Store.getters.roles
+      const roles = Store.getters['user/roles']
       if (roles.length > 0) {
         next()
       } else {
         try {
-          const { roles } = await Store.dispatch('getInfo')
+          const { roles } = await Store.dispatch('user/getInfo')
           const accessedRoutes = await Store.dispatch('generateRoutes', roles)
           router.addRoutes(accessedRoutes)
           next()

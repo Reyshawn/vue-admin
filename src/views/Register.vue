@@ -69,7 +69,7 @@ export default {
           password: this.password
         }
 
-        this.$store.dispatch('register', info)
+        this.$store.dispatch('user/register', info)
           .then(response => {
             this.$store.dispatch('pushMessage', {
               type: 'success',

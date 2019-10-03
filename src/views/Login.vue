@@ -45,7 +45,7 @@ export default {
           password: this.password,
           rememberMe: this.rememberMe
         }
-        this.$store.dispatch('login', info).then(response => {
+        this.$store.dispatch('user/login', info).then(response => {
           this.$store.dispatch('pushMessage', {
             type: 'success',
             msg: '❤️ Logged in success!'
