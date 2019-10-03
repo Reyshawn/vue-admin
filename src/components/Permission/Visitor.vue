@@ -13,31 +13,31 @@
           </li>
           <li class="info">
             <p><i class="fas fa-venus-mars"></i> Gender:</p>
-            <p>{{ gender }}</p>
+            <p class="info-value">{{ gender }}</p>
           </li>
           <li class="info">
             <p><i class="fas fa-phone-alt"></i> Phone:</p>
-            <p>{{ phone }}</p>
+            <p class="info-value">{{ phone }}</p>
           </li>
           <li class="info">
             <p><i class="far fa-envelope"></i> E-mail:</p>
-            <p>{{ email }}</p>
+            <p class="info-value">{{ email }}</p>
           </li>
           <li class="info">
             <p><i class="fas fa-map-marker-alt"></i> Address:</p>
-            <p>{{ address }}</p>
+            <p class="info-value">{{ address }}</p>
           </li>
           <li class="info">
             <p><i class="fas fa-link"></i> Homepage:</p>
-            <p>{{ homepage }}</p>
+            <p class="info-value">{{ homepage }}</p>
           </li>
           <li class="info">
             <p><i class="far fa-building"></i> Company:</p>
-            <p>{{ company }}</p>
+            <p class="info-value">{{ company }}</p>
           </li>
           <li class="info">
             <p><i class="fas fa-university"></i> Education:</p>
-            <p>{{ education }}</p>
+            <p class="info-value">{{ education }}</p>
           </li>
         </ul>
       </div>
@@ -194,10 +194,11 @@ export default {
   margin: 10px;
   grid-area: user;
   border: 1px solid #e6e6e6;
+  border-radius: 10px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   background-color: #fff;
-  border-radius: 10px;
+  
   display: grid;
   grid-template-columns: 40% 60%;
   grid-template-rows: 80% 20%;
@@ -244,12 +245,17 @@ export default {
 .info {
   display: flex;
   align-items: center;
+  margin: 5px 0;
 }
 
 .info p:first-child, .info label {
   width: 120px;
   font-size: .8em;
   font-weight: bold;
+}
+
+.info-value {
+  font-size: .8em;
 }
 
 .info-list {
@@ -381,7 +387,6 @@ fieldset legend {
 }
 
 .button-wrapper button:hover {
-  color: #fff1c1;
   box-shadow: 0 3px 3px rgba(0,0,0,0.25), 0 5px 7px rgba(0,0,0,0.22);
 }
 

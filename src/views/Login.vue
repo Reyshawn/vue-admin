@@ -70,7 +70,7 @@ export default {
   bottom: 0;
   right: 0;
   left: 0;
-  background-color: #293462;
+  background: linear-gradient(45deg, rgba(41,52,98,1) 0%, rgba(18,132,156,1) 100%);
 }
 
 .login-form {
@@ -81,9 +81,9 @@ export default {
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-
-  box-shadow: 10px 10px 30px 1px rgba(0,0,0,0.5);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
+
 
 .login-form form {
   display: flex;
@@ -128,12 +128,17 @@ export default {
   border: none;
   color: #fff1c1;
   background-color: #293462;
-  border-radius: 0 !important;
+  border-radius: 5px !important;
+
+  font-size: .8em;
+  font-weight: 500;
+
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
 .button:hover {
-  background-color: #242e58;
-  color: #fff1c1;
+  box-shadow: 0 3px 3px rgba(0,0,0,0.25), 0 5px 7px rgba(0,0,0,0.22);
 }
 
 .dividend {
