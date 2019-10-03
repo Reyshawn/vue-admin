@@ -48,14 +48,17 @@
       <button class="edit-button" @click="showForm=!showForm"><i class="fas fa-cog"></i></button>
     </div>
     <div class="user-status">
-      
+
     </div>
 
     <div class="form-container" :class="{'show-form': showForm}">
       <form class="edit-form" @submit.prevent="updateInfo">
         <fieldset>
-          <legend>Avater</legend>
-
+          <legend>Avatar</legend>
+          <div class="info info-avatar">
+            <div class="edit-avatar"></div>
+            <input type="file" name="avatar" id="">
+          </div>
         </fieldset>
         <fieldset>
           <legend>Personal</legend>
@@ -108,7 +111,7 @@
             <textarea rows="5" cols="33" name="introduction" v-model="introduction" />
           </div>
         </fieldset>
-          
+
         <div class="button-wrapper">
           <button class="_button" type="submit">Confirm</button>
           <button class="_button" @click.prevent="showForm=false">Cancel</button>
@@ -151,17 +154,17 @@ export default {
   },
   methods: {
     async updateInfo (e) {
-        const res = await this.$store.dispatch('user/setInfo', {
-          name: this.name,
-          gender: this.gender,
-          phone: this.phone,
-          address: this.address,
-          homepage: this.homepage,
-          company: this.company,
-          education: this.education,
-          introduction: this.introduction
-        })
-        console.log(res)
+      const res = await this.$store.dispatch('user/setInfo', {
+        name: this.name,
+        gender: this.gender,
+        phone: this.phone,
+        address: this.address,
+        homepage: this.homepage,
+        company: this.company,
+        education: this.education,
+        introduction: this.introduction
+      })
+      console.log(res)
     }
   }
 }
@@ -173,7 +176,8 @@ export default {
 
   height: calc(100vh - 50px);
   width: 100%;
-  /* border: 5px solid #b60a5a; */
+
+  overflow: hidden;
 
   color: #293462;
 
@@ -282,12 +286,12 @@ export default {
   height: 100%;
   width: 100%;
 
-  
-  transform: translateX(100%);
-  transition: transform .3s ease-in-out;
+  transform: translateY(100%);
+  transition: transform .5s cubic-bezier(.25,.8,.25,1);
 
   display: flex;
   justify-content: center;
+  align-items: center;
 
 }
 
@@ -296,18 +300,24 @@ export default {
 }
 
 .edit-form {
-  border: 1px solid #b60a5a;
-  margin: 10px;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
   padding: 30px;
   background-color: #fff;
   opacity: 1!important;
   width: 500px;
+  height: 750px;
 
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
+.edit-form:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
 
 fieldset {
-	border: 2px solid #293462;
+  border: 2px solid #293462;
   border-radius: 5px;
   margin: 10px 0;
   padding: 10px;
@@ -344,8 +354,8 @@ fieldset legend {
 }
 
 .info-intro textarea {
-  max-width: 240px;
-  max-height: 200px;
+  max-width: 250px;
+  max-height: 100px;
 }
 
 .button-wrapper {
@@ -365,11 +375,25 @@ fieldset legend {
 
   font-size: .8em;
   font-weight: 500;
+
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
 .button-wrapper button:hover {
-  background-color: #515875;
   color: #fff1c1;
+  box-shadow: 0 3px 3px rgba(0,0,0,0.25), 0 5px 7px rgba(0,0,0,0.22);
+}
+
+.edit-avatar {
+  width: 100px;
+  height: 100px;
+
+  border: 2px dashed #293462;
+}
+
+.info-avatar input {
+  margin-left: 50px;
 }
 
 </style>

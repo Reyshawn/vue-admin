@@ -100,11 +100,11 @@ const actions = {
   setInfo ({ dispatch }, payload) {
     return new Promise((resolve, reject) => {
       axios.post('/auth/user', payload,
-      {
-        headers: {
-          Authorization: 'Bearer ' + getToken()
-        }
-      })
+        {
+          headers: {
+            Authorization: 'Bearer ' + getToken()
+          }
+        })
         .then(response => {
           dispatch('pushMessage', {
             type: 'success',
@@ -125,7 +125,7 @@ const actions = {
 
 const getters = {
   token: state => state.token,
-  roles: state => state.roles,
+  roles: state => state.roles
 
 }
 
