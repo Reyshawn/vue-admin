@@ -3,7 +3,7 @@
     <div class="user-profile">
       <div class="avatar-container">
         <div class="avatar">
-          <img src="@/assets/user.jpg" alt="user-avatar">
+          <img :src="src" alt="user-avatar">
         </div>
       </div>
       <div class="info-container">
@@ -29,7 +29,7 @@
           </li>
           <li class="info">
             <p><i class="fas fa-link"></i> Homepage:</p>
-            <p class="info-value">{{ homepage }}</p>
+            <p class="info-value"><a :href="homepage">{{ homepage }}</a></p>
           </li>
           <li class="info">
             <p><i class="far fa-building"></i> Company:</p>
@@ -48,16 +48,17 @@
       <button class="edit-button" @click="showForm=!showForm"><i class="fas fa-cog"></i></button>
     </div>
     <div class="user-status">
-
     </div>
 
-    <div class="form-container" :class="{'show-form': showForm}">
+    <div class="form-container" :class="{'show-form': showForm}" @click.stop="closeForm" ref="formContainer">
       <form class="edit-form" @submit.prevent="updateInfo">
         <fieldset>
           <legend>Avatar</legend>
           <div class="info info-avatar">
-            <div class="edit-avatar"></div>
-            <input type="file" name="avatar" id="">
+            <div class="edit-avatar">
+              <img src="" alt="">
+            </div>
+            <input type="file" accept="image/*" name="avatar" id="" @change="handleFile">
           </div>
         </fieldset>
         <fieldset>
@@ -118,6 +119,25 @@
         </div>
       </form>
     </div>
+    <div
+      class="edit-img-container" 
+      :class="{'show-edit-img': showEditImg}"
+    >
+      <div class="edit-img">
+        <h1>Crop the image</h1>
+        <div class="img-container">
+          <img src="" alt="">
+          <div
+            class="clip-path"
+            @mousedown="startDrag"
+            @mouseup="endDrag"
+          >
+          </div>
+      </div>
+        <button class="_button" @click="confirmEdit">Clip</button>
+        <button class="_button" @click="showEditImg=false">Cancel</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -127,7 +147,10 @@ export default {
   data () {
     return {
       showForm: false,
+      showEditImg: false,
+      src: '',
 
+      avatar: null,
       name: '',
       gender: '',
       phone: '',
@@ -136,11 +159,17 @@ export default {
       homepage: '',
       company: '',
       education: '',
-      introduction: ''
+      introduction: '',
+
+      posX: 0,
+      posY: 0,
+      top: 0,
+      left: 0
     }
   },
 
   async mounted () {
+
     const res = await this.$store.dispatch('user/getInfo')
     this.name = res.name
     this.gender = res.gender
@@ -151,26 +180,107 @@ export default {
     this.company = res.company
     this.education = res.education
     this.introduction = res.introduction
+    this.avatar = res.avatar
+
+    let arrayBuffer = this.avatar.data.data
+    let bytes = new Uint8Array(arrayBuffer)
+    let blob = new Blob([bytes], { type: 'image/png' })
+    let urlCreator = window.URL || window.webkitURL
+    let imageUrl = urlCreator.createObjectURL(blob)
+    this.src = imageUrl
   },
   methods: {
     async updateInfo (e) {
-      const res = await this.$store.dispatch('user/setInfo', {
-        name: this.name,
-        gender: this.gender,
-        phone: this.phone,
-        address: this.address,
-        homepage: this.homepage,
-        company: this.company,
-        education: this.education,
-        introduction: this.introduction
-      })
+      let FD = new FormData(this.$el.querySelector('.edit-form'))
+      let image = this.$el.querySelector('.edit-avatar img')
+
+      FD.append('image', image.src.slice(22))
+
+      const res = await this.$store.dispatch('user/setInfo', FD)
       console.log(res)
+      this.showForm = false
+    },
+
+    closeForm (e) {
+      if (e.target !== this.$refs.formContainer) {
+        return
+      }
+      this.showForm = false
+    },
+
+    handleFile (e) {
+      let img = this.$el.querySelector('.edit-img img')
+      let urlCreator = window.URL || window.webkitURL
+      if (e.target.files.length > 0) {
+        img.src = urlCreator.createObjectURL(e.target.files[0])
+        this.showEditImg = true
+      } else {
+        img.src = ''
+        this.showEditImg = false
+      }
+    },
+
+    drag (e) {
+      e.stopPropagation()
+      let offsetY = this.top + e.clientY - this.posY
+      let offsetX = this.left + e.clientX - this.posX
+      let maxHeight = parseInt(this.$el.querySelector('.edit-img img').height) - e.target.offsetHeight
+      let maxWidth = parseInt(this.$el.querySelector('.edit-img img').width) - e.target.offsetWidth
+
+      offsetY = Math.min(Math.max(offsetY, 0), maxHeight)
+      offsetX = Math.min(Math.max(offsetX, 0), maxWidth)
+      e.target.style.top =  offsetY + 'px'
+      e.target.style.left = offsetX + 'px'
+    },
+
+    startDrag(e) {
+      e.stopPropagation()
+      
+      this.posX = e.clientX
+      this.posY = e.clientY
+      this.top = parseInt(e.target.style.top) || 0
+      this.left = parseInt(e.target.style.left) || 0
+
+      e.target.addEventListener('mousemove', this.drag)
+    },
+
+    endDrag(e) {
+      e.stopPropagation()
+      e.target.removeEventListener('mousemove', this.drag)
+    },
+
+    confirmEdit (e) {
+      let canvas = document.createElement('canvas')
+
+      let image = this.$el.querySelector('.edit-img img')
+      let clip = this.$el.querySelector('.edit-img .clip-path')
+      let ctx = canvas.getContext('2d')
+
+      console.log(ctx)
+
+      let scaleX = image.naturalWidth / image.width
+      let scaleY = image.naturalHeight / image.height
+
+      canvas.width = 300 * scaleX
+      canvas.height = 300 * scaleY
+
+      ctx.drawImage(image, parseInt(clip.style.left) * scaleX, parseInt(clip.style.top) * scaleY, 300 * scaleX, 300 * scaleY, 0,0,300 * scaleX, 300 * scaleY)
+      this.$el.querySelector('.edit-avatar img').src = canvas.toDataURL()
+      this.showEditImg = false
     }
   }
 }
 </script>
 
 <style scoped>
+a {
+  color: #294362;
+}
+
+a:hover {
+  border-bottom: 1px solid #294362;
+}
+
 .visitor-container {
   position: relative;
 
@@ -198,7 +308,7 @@ export default {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   background-color: #fff;
-  
+
   display: grid;
   grid-template-columns: 40% 60%;
   grid-template-rows: 80% 20%;
@@ -230,16 +340,11 @@ export default {
 .avatar {
   height: 200px;
   width: 200px;
-  /* border: 1px solid #b60a5a; */
+
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-}
-
-.avatar img {
-  /* clip-path: circle(); */
-  transform: scale(1.8, 1.8);
 }
 
 .info {
@@ -260,8 +365,6 @@ export default {
 
 .info-list {
   width: 320px;
-  /* margin: 27px 0; */
-  /* border: 1px solid #b60a5a; */
 }
 
 .info-name {
@@ -291,6 +394,8 @@ export default {
   position: absolute;
   height: 100%;
   width: 100%;
+
+  background-color: rgba(0, 0, 0, 0.3);
 
   transform: translateY(100%);
   transition: transform .5s cubic-bezier(.25,.8,.25,1);
@@ -369,7 +474,7 @@ fieldset legend {
   justify-content: space-evenly;
 }
 
-.button-wrapper button {
+._button {
   width: 100px;
   height: 30px;
   margin: 10px 0;
@@ -386,19 +491,87 @@ fieldset legend {
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
-.button-wrapper button:hover {
+._button:hover {
   box-shadow: 0 3px 3px rgba(0,0,0,0.25), 0 5px 7px rgba(0,0,0,0.22);
 }
 
 .edit-avatar {
   width: 100px;
   height: 100px;
-
   border: 2px dashed #293462;
+}
+
+.edit-avatar img {
+  width: 100px;
+  height: 100px;
 }
 
 .info-avatar input {
   margin-left: 50px;
+}
+
+.user-status img {
+  height: 300px;
+}
+
+.edit-img-container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba(0, 0, 0, 0.3);
+
+  transform: translateY(100vh);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.show-edit-img {
+  transform: translateY(0);
+}
+
+.edit-img {
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #fff;
+
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.edit-img:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.edit-img h1 {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.edit-img button {
+  margin-right: 30px;
+}
+
+
+.img-container {
+  position: relative;
+}
+
+.clip-path {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 300px;
+  border: 3px solid #b60a5a;
+}
+
+
+.img-canvas {
+  border: 1px solid #b60a5a;
 }
 
 </style>
