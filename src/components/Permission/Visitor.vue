@@ -120,7 +120,7 @@
       </form>
     </div>
     <div
-      class="edit-img-container" 
+      class="edit-img-container"
       :class="{'show-edit-img': showEditImg}"
     >
       <div class="edit-img">
@@ -169,7 +169,6 @@ export default {
   },
 
   async mounted () {
-
     const res = await this.$store.dispatch('user/getInfo')
     this.name = res.name
     this.gender = res.gender
@@ -229,13 +228,13 @@ export default {
 
       offsetY = Math.min(Math.max(offsetY, 0), maxHeight)
       offsetX = Math.min(Math.max(offsetX, 0), maxWidth)
-      e.target.style.top =  offsetY + 'px'
+      e.target.style.top = offsetY + 'px'
       e.target.style.left = offsetX + 'px'
     },
 
-    startDrag(e) {
+    startDrag (e) {
       e.stopPropagation()
-      
+
       this.posX = e.clientX
       this.posY = e.clientY
       this.top = parseInt(e.target.style.top) || 0
@@ -244,7 +243,7 @@ export default {
       e.target.addEventListener('mousemove', this.drag)
     },
 
-    endDrag(e) {
+    endDrag (e) {
       e.stopPropagation()
       e.target.removeEventListener('mousemove', this.drag)
     },
@@ -264,7 +263,7 @@ export default {
       canvas.width = 300 * scaleX
       canvas.height = 300 * scaleY
 
-      ctx.drawImage(image, parseInt(clip.style.left) * scaleX, parseInt(clip.style.top) * scaleY, 300 * scaleX, 300 * scaleY, 0,0,300 * scaleX, 300 * scaleY)
+      ctx.drawImage(image, parseInt(clip.style.left) * scaleX, parseInt(clip.style.top) * scaleY, 300 * scaleX, 300 * scaleY, 0, 0, 300 * scaleX, 300 * scaleY)
       this.$el.querySelector('.edit-avatar img').src = canvas.toDataURL()
       this.showEditImg = false
     }
@@ -555,7 +554,6 @@ fieldset legend {
   margin-right: 30px;
 }
 
-
 .img-container {
   position: relative;
 }
@@ -568,7 +566,6 @@ fieldset legend {
   height: 300px;
   border: 3px solid #b60a5a;
 }
-
 
 .img-canvas {
   border: 1px solid #b60a5a;
