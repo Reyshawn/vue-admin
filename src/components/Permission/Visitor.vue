@@ -127,6 +127,12 @@
         <h1>Crop the image</h1>
         <div class="img-container">
           <img src="" alt="">
+          <div class="crop-shades">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
           <div
             class="clip-path"
             @mousedown="startDrag"
@@ -164,11 +170,22 @@ export default {
       posX: 0,
       posY: 0,
       top: 0,
-      left: 0
+      left: 0,
+
+      leftDiv: null,
+      topDiv: null,
+      rightDiv: null,
+      bottomDiv: null
+
     }
   },
 
   async mounted () {
+    this.leftDiv = this.$el.querySelector('.crop-shades div:nth-child(1)')
+    this.topDiv = this.$el.querySelector('.crop-shades div:nth-child(2)')
+    this.rightDiv = this.$el.querySelector('.crop-shades div:nth-child(3)')
+    this.bottomDiv = this.$el.querySelector('.crop-shades div:nth-child(4)')
+
     const res = await this.$store.dispatch('user/getInfo')
     this.name = res.name
     this.gender = res.gender
@@ -226,10 +243,19 @@ export default {
       let maxHeight = parseInt(this.$el.querySelector('.edit-img img').height) - e.target.offsetHeight
       let maxWidth = parseInt(this.$el.querySelector('.edit-img img').width) - e.target.offsetWidth
 
+
       offsetY = Math.min(Math.max(offsetY, 0), maxHeight)
       offsetX = Math.min(Math.max(offsetX, 0), maxWidth)
       e.target.style.top = offsetY + 'px'
       e.target.style.left = offsetX + 'px'
+
+      this.leftDiv.style.width = offsetX + 'px'
+      this.topDiv.style.left = offsetX + 'px'
+      this.topDiv.style.height = offsetY + 'px'
+      this.rightDiv.style.width = (maxWidth - offsetX) + 'px'
+      this.bottomDiv.style.left = offsetX + 'px'
+      this.bottomDiv.style.height = (maxHeight - offsetY) + 'px'
+
     },
 
     startDrag (e) {
@@ -239,6 +265,9 @@ export default {
       this.posY = e.clientY
       this.top = parseInt(e.target.style.top) || 0
       this.left = parseInt(e.target.style.left) || 0
+
+      let cropShades = this.$el.querySelector('.crop-shades')
+      cropShades.style.height = this.$el.querySelector('.edit-img img').height + 'px'
 
       e.target.addEventListener('mousemove', this.drag)
     },
@@ -564,11 +593,47 @@ fieldset legend {
   left: 0;
   width: 300px;
   height: 300px;
-  border: 3px solid #b60a5a;
+  border: 1px solid #294362;
 }
 
-.img-canvas {
-  border: 1px solid #b60a5a;
+.crop-shades {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.crop-shades div {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.crop-shades div:nth-child(1) {
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+}
+
+.crop-shades div:nth-child(2) {
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 0;
+}
+
+.crop-shades div:nth-child(3) {
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 100%;
+}
+
+.crop-shades div:nth-child(4) {
+  bottom: 0;
+  left: 0;
+  width: 300px;
+  height: 0;
 }
 
 </style>
