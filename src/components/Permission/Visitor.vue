@@ -243,7 +243,6 @@ export default {
       let maxHeight = parseInt(this.$el.querySelector('.edit-img img').height) - e.target.offsetHeight
       let maxWidth = parseInt(this.$el.querySelector('.edit-img img').width) - e.target.offsetWidth
 
-
       offsetY = Math.min(Math.max(offsetY, 0), maxHeight)
       offsetX = Math.min(Math.max(offsetX, 0), maxWidth)
       e.target.style.top = offsetY + 'px'
@@ -255,7 +254,6 @@ export default {
       this.rightDiv.style.width = (maxWidth - offsetX) + 'px'
       this.bottomDiv.style.left = offsetX + 'px'
       this.bottomDiv.style.height = (maxHeight - offsetY) + 'px'
-
     },
 
     startDrag (e) {
@@ -297,7 +295,7 @@ export default {
       this.showEditImg = false
     },
 
-    cancelEdit(e) {
+    cancelEdit (e) {
       this.showEditImg = false
       this.posX = 0
       this.posY = 0
