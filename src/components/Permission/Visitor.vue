@@ -141,7 +141,7 @@
           </div>
       </div>
         <button class="_button" @click="confirmEdit">Clip</button>
-        <button class="_button" @click="showEditImg=false">Cancel</button>
+        <button class="_button" @click="cancelEdit">Cancel</button>
       </div>
     </div>
   </div>
@@ -295,6 +295,22 @@ export default {
       ctx.drawImage(image, parseInt(clip.style.left) * scaleX, parseInt(clip.style.top) * scaleY, 300 * scaleX, 300 * scaleY, 0, 0, 300 * scaleX, 300 * scaleY)
       this.$el.querySelector('.edit-avatar img').src = canvas.toDataURL()
       this.showEditImg = false
+    },
+
+    cancelEdit(e) {
+      this.showEditImg = false
+      this.posX = 0
+      this.posY = 0
+      this.top = 0
+      this.left = 0
+
+      let clipPath = this.$el.querySelector('.clip-path')
+
+      clipPath.style = ''
+      this.leftDiv.style = ''
+      this.rightDiv.style = ''
+      this.topDiv.style = ''
+      this.bottomDiv.style = ''
     }
   }
 }
@@ -593,7 +609,7 @@ fieldset legend {
   left: 0;
   width: 300px;
   height: 300px;
-  border: 1px solid #294362;
+  border: 2px solid #294362;
 }
 
 .crop-shades {
