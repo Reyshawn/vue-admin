@@ -249,7 +249,7 @@ export default {
 }
 
 ._dropdown-menu-item a {
-  display: block;
+  display: inline-block;
   min-width: 100%;
 }
 
