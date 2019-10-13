@@ -23,7 +23,7 @@
             </span>
             <a class="menu-title">{{route.name}}</a>
           </div>
-          <ul class="_dropdown-menu" v-if="submenu[route.name]">
+          <ul class="_dropdown-menu" :class="{'closed-menu': submenu[route.name]}" :style="{'--count': route.children.length}">
             <li class="menu-item submenu" v-for="subRoute in route.children" :key="subRoute.name" :class="{currentRoute: $route.path===subRoute.path}">
               <router-link :to="subRoute.path" class="menu-title-wrapper">
                 <span class="icon">
@@ -129,12 +129,23 @@ export default {
   padding-left: 12px;
 }
 
+._dropdown-menu {
+  max-height: 0;
+  overflow: hidden;
+  transition: all .3s ease-in-out;
+}
+
+.closed-menu {
+  max-height: calc(var(--count) * 50px);
+}
+
 .collapse ._dropdown-menu {
   background-color: #293462;
   box-shadow: 10px 10px 30px 1px rgba(0,0,0,0.5);
   position: absolute;
   left: 50px;
   right: -120px;
+  transition: none;
   transform: translate(0, -50px);
 }
 
