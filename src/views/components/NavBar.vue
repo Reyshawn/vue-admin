@@ -21,10 +21,14 @@
         </router-link>
         <li class="user-profile nav-item">
           <div class="_dropdown" @click="toggleDropdown">
-            <img src="@/assets/user.jpg" alt="user-avatar">
+            <img :src="src" alt="user-avatar">
             <ul class="_dropdown-menu" v-if="showDropdown">
-              <li class="_dropdown-menu-item"><a>Dashbord</a></li>
-              <li class="_dropdown-menu-item"><a>Profile</a></li>
+              <li class="_dropdown-menu-item">
+                <router-link to="/dashboard">Dashboard</router-link>
+              </li>
+              <li class="_dropdown-menu-item">
+                <router-link to="/visitor">Profile</router-link>
+              </li>
               <li class="_dropdown-menu-item"><a>Settings</a></li>
               <li class="_dropdown-menu-item"><a @click="logout">Logout</a></li>
             </ul>
@@ -44,9 +48,19 @@ export default {
   },
   data () {
     return {
+      src: '',
       showDropdown: false,
       showSearch: false
     }
+  },
+  async mounted () {
+    const res = await this.$store.dispatch('user/getInfo')
+    let arrayBuffer = res.avatar.data.data
+    let bytes = new Uint8Array(arrayBuffer)
+    let blob = new Blob([bytes], { type: 'image/png' })
+    let urlCreator = window.URL || window.webkitURL
+    let imageUrl = urlCreator.createObjectURL(blob)
+    this.src = imageUrl
   },
   methods: {
     logout () {
@@ -213,20 +227,8 @@ export default {
 
 ._dropdown img {
   clip-path: circle();
-  transform: scale(1.3,1.3);
+  transform: scale(0.8)
 }
-
-/* ._dropdown-cancel {
-  background-color: #242e58;
-  opacity: 0.2;
-  width: 100vw;
-  height: 100vh;
-  z-index: 2;
-  position:fixed;
-  top: 0;
-  right: 0;
-  cursor: auto;
-} */
 
 ._dropdown-menu {
   background-color: #293462;
@@ -244,6 +246,11 @@ export default {
 
 ._dropdown-menu-item {
   padding: 3px 7px;
+}
+
+._dropdown-menu-item a {
+  display: block;
+  min-width: 100%;
 }
 
 ._dropdown-menu-item:hover {
