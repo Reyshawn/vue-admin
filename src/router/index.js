@@ -64,6 +64,15 @@ export const asyncRoutes = [
         }
       },
       {
+        path: '/gallery',
+        name: 'Gallery',
+        component: () => import('@/components/Gallery'),
+        meta: {
+          icon: 'fab fa-instagram',
+          roles: ['visitor']
+        }
+      },
+      {
         path: '/todo',
         name: 'Todo',
         component: () => import('@/components/Todo'),
