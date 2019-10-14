@@ -10,7 +10,9 @@
 
 <script>
 import Notification from '@/components/Notification'
-import Layout from '@/views/Layout'
+
+// lazy load the component
+const Layout = () => import('@/views/Layout')
 
 export default {
   name: 'App',

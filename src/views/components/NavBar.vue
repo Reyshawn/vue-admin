@@ -227,7 +227,7 @@ export default {
 
 ._dropdown img {
   clip-path: circle();
-  transform: scale(0.8)
+  transform: scale(0.7)
 }
 
 ._dropdown-menu {
