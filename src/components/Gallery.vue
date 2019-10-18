@@ -1,8 +1,6 @@
 <template>
   <div class="gallery-container">
-    <div class="place-holder" v-if="scrolled">
-      
-    </div>
+    <div class="place-holder" v-if="scrolled"></div>
     <div class="search-header" :class="{'scrolled': scrolled}">
       <h1>Gallery</h1>
       <div class="search-box">
@@ -11,14 +9,16 @@
       </div>
     </div>
     <div class="search-result grid">
-      <div class="_box">scrollY: {{scroll}} sidebar closed?: {{closed}}</div>
       <div class="grid-sizer"></div>
       <div v-for="image in images" :key="image.id" class="grid-item">
         <img :src="image.urls.small"  alt="">
       </div>
     </div>
-    <div class="scrollTop" @click="scrollTop"></div>
-    <div class="loading-container">
+    <div class="scrollTop" @click="scrollTop" :class="{'hide': !scrolled}">
+      <i class="fas fa-arrow-up"></i>
+    </div>
+    <div class="loading-container" v-if="loading">
+      <div class="_loader">Loading ... </div>
     </div>
   </div>
 </template>
@@ -89,7 +89,6 @@ export default {
         this.page++
         let res = await getImages(this.q, this.page)
         this.images.push(...res.data.results)
-        this.loading = false
       }
     },
     async search (e) {
@@ -125,6 +124,7 @@ export default {
         }
         imageLoaded('.grid', () => {
           this.msnry.layout()
+          this.loading = false
         })
       })
     },
@@ -182,7 +182,6 @@ button:hover {
 .gallery-container {
   width: 100%;
   height: auto;
-  border: 5px solid #d11141;
 
   display: flex;
   flex-direction: column;
@@ -213,6 +212,13 @@ button:hover {
   background-color: #fff;
   display: flex;
   justify-content: space-between;
+
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: box-shadow 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.search-header .search-box:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 .search-box input {
@@ -279,20 +285,35 @@ button:hover {
 
 
 .loading-container {
-  margin-top: 100px;
-  height: 100px;
-  width: 500px;
-  
-  border: 3px solid #d11141;
+  margin-top: 10px;
 }
 
 .scrollTop {
   position: fixed;
-  height: 30px;
-  width: 30px;
-  border: 3px solid #d11141;
-  bottom: 10px;
-  right: 10px;
+  height: 50px;
+  width: 50px;
+  border: 2px solid #1a213d;
+  color: #fff1c1;
+  background-color: #294362;
+  border-radius: 50%;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.5em;
+
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: box-shadow 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.scrollTop:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.hide {
+  visibility: hidden;
 }
 
 .place-holder {
@@ -300,12 +321,63 @@ button:hover {
   height: 388px; /* the height of bigger search-header minus the height of scrolled seach-header */
 }
 
-._box {
-  position: sticky;
-  z-index: 2;
+/* loader animation */
+
+._loader {
+  font-size: 5px;
+  margin: 50px auto;
+  text-indent: -9999em;
+  width: 11em;
+  height: 11em;
+  border-radius: 50%;
+  background: #294362;
+  background: linear-gradient(to right, #294362 0%, rgba(255, 255, 255, 0) 42%);
+  position: relative;
+  animation: load3 1s infinite linear;
+  transform: translateZ(0);
+}
+._loader:before {
+  width: 50%;
+  height: 50%;
+  background: #294362;
+  border-radius: 100% 0 0 0;
+  position: absolute;
   top: 0;
-  margin-right: 400px;
-  widows: 300px;
+  left: 0;
+  content: '';
+}
+._loader:after {
+  background: #fff1c1;
+  width: 75%;
+  height: 75%;
+  border-radius: 50%;
+  content: '';
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+@-webkit-keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 
 @media(min-width:1440px) {
