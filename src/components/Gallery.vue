@@ -1,5 +1,8 @@
 <template>
   <div class="gallery-container">
+    <div class="place-holder" v-if="scrolled">
+      
+    </div>
     <div class="search-header" :class="{'scrolled': scrolled}">
       <h1>Gallery</h1>
       <div class="search-box">
@@ -26,6 +29,8 @@ import Masonry from 'masonry-layout'
 import imageLoaded from 'imagesloaded'
 
 import {mapGetters} from 'vuex'
+import {UnsplashAPI} from '@/config/api.js'
+import animate from '@/utils/animate.js'
 
 async function getImages (query, page) {
   const params = {
@@ -36,7 +41,7 @@ async function getImages (query, page) {
   const headers = {
     'Content-Type': 'application/json',
     'Accept-Version': 'v1',
-    'Authorization': 'Client-ID 7e417839332a5515cbc9a7a2ca51815ee33211fbe08ba142e384a996c3e2901d'
+    'Authorization': `Client-ID ${UnsplashAPI}`
   }
   const config = {
     headers,
@@ -49,66 +54,6 @@ async function getImages (query, page) {
     console.log(e)
   }
 }
-
-window.rID = null
-
-function animate(duration, fn) {
-  console.log('duration', duration)
-  const start = performance.now();
-  
-  let progress = 0; // between 0 and 1, +/-
-
-  console.log('start', start);
-
-  var i = 1
-
-  function stopAni() {
-    cancelAnimationFrame(window.rID);
-    window.rID = null;  
-  };
-  function tick(now) {
-
-    i++;
-    if (progress >= 1) {
-      stopAni()
-      fn(1);
-      return;
-    }
-
-    const elapsed = now - start;
-    progress = elapsed / duration;
-
-    // callback
-    fn(progress); // number between 0 and 1
-
-    window.rID = requestAnimationFrame(tick); // every 16.6666667 ms
-  }
-  tick(start);
-}
-
-function easing(progress) {
-  return (1 - Math.cos(progress * Math.PI)) / 2
-}
-
-const animationDefaults = {
-  duration: 1000,
-  easing
-}
-
-animate.fromTo = ({
-  from,
-  to,
-  easing,
-  duration
-}, fn) => {
-  easing = easing || animationDefaults.easing;
-  duration = duration || animationDefaults.duration;
-
-  const delta = +to - +from;
-  console.log('delta', delta)
-  return animate(duration, progress => fn(from + easing(progress) * delta));
-}
-
 
 export default {
   name: 'gallery',
@@ -135,7 +80,7 @@ export default {
       this.scroll = window.pageYOffset // window.scrollY or document.documentElement.scrollTop
       if (window.scrollY > 600) {
         this.scrolled = true
-      } else if (window.scrollY < 200) {
+      } else {
         this.scrolled = false
       }
       if (!this.loading && window.innerHeight + window.scrollY >= document.body.scrollHeight) {
@@ -148,6 +93,9 @@ export default {
       }
     },
     async search (e) {
+      if (this.scrolled) {
+        this.scrollTop()
+      }
       this.loading = true
       console.log('loading')
       this.page = 1
@@ -233,7 +181,7 @@ button:hover {
 
 .gallery-container {
   width: 100%;
-  height: 3000px;
+  height: auto;
   border: 5px solid #d11141;
 
   display: flex;
@@ -246,7 +194,6 @@ button:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: all .5s linear;
 
   z-index: 1;
 }
@@ -346,6 +293,11 @@ button:hover {
   border: 3px solid #d11141;
   bottom: 10px;
   right: 10px;
+}
+
+.place-holder {
+  height: 100%;
+  height: 388px; /* the height of bigger search-header minus the height of scrolled seach-header */
 }
 
 ._box {
