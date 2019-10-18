@@ -1,40 +1,36 @@
 let rID = null
 
-function animate(duration, fn) {
+function animate (duration, fn) {
   // If there has been an animation, then stop.
-  if (rID) return ;
+  if (rID) return
 
-  const start = performance.now();
-  
-  let progress = 0; // between 0 and 1, +/-
+  const start = performance.now()
 
-  var i = 1
+  let progress = 0 // between 0 and 1, +/-
 
-  function stopAni() {
-    cancelAnimationFrame(rID);
-    rID = null;  
+  function stopAni () {
+    cancelAnimationFrame(rID)
+    rID = null
   };
-  function tick(now) {
-
-    i++;
+  function tick (now) {
     if (progress >= 1) {
       stopAni()
-      fn(1);
-      return;
+      fn(1)
+      return
     }
 
-    const elapsed = now - start;
-    progress = elapsed / duration;
+    const elapsed = now - start
+    progress = elapsed / duration
 
     // callback
-    fn(progress); // number between 0 and 1
+    fn(progress) // number between 0 and 1
 
-    rID = requestAnimationFrame(tick); // every 16.6666667 ms
+    rID = requestAnimationFrame(tick) // every 16.6666667 ms
   }
-  tick(start);
+  tick(start)
 }
 
-function easing(progress) {
+function easing (progress) {
   return (1 - Math.cos(progress * Math.PI)) / 2
 }
 
@@ -49,12 +45,12 @@ animate.fromTo = ({
   easing,
   duration
 }, fn) => {
-  easing = easing || animationDefaults.easing;
-  duration = duration || animationDefaults.duration;
+  easing = easing || animationDefaults.easing
+  duration = duration || animationDefaults.duration
 
-  const delta = +to - +from;
+  const delta = +to - +from
 
-  return animate(duration, progress => fn(from + easing(progress) * delta));
+  return animate(duration, progress => fn(from + easing(progress) * delta))
 }
 
 export default animate

@@ -28,8 +28,8 @@ import axios from 'axios'
 import Masonry from 'masonry-layout'
 import imageLoaded from 'imagesloaded'
 
-import {mapGetters} from 'vuex'
-import {UnsplashAPI} from '@/config/api.js'
+import { mapGetters } from 'vuex'
+import { UnsplashAPI } from '@/config/api.js'
 import animate from '@/utils/animate.js'
 
 async function getImages (query, page) {
@@ -111,7 +111,6 @@ export default {
       }, value => {
         window.scrollTo(0, value)
       })
-
     }
   },
   watch: {
@@ -268,7 +267,7 @@ button:hover {
 }
 
 .grid-item {
-  padding: 10px; 
+  padding: 10px;
 }
 
 .grid-item img {
@@ -281,8 +280,6 @@ button:hover {
 .grid-item img:hover {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
-
-
 
 .loading-container {
   margin-top: 10px;
