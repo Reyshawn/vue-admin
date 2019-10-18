@@ -1,21 +1,21 @@
 <template>
   <div class="dashboard-container">
-    <div class="box box1">
+    <div class="_box box1">
       <weather-details />
     </div>
-    <div class="box box2">
+    <div class="_box box2">
       <daily-t />
     </div>
-    <div class="box box3">
+    <div class="_box box3">
       <hourly-t />
     </div>
-    <div class="box box4">
+    <div class="_box box4">
       <uv-index />
     </div>
-    <div class="box box5">
+    <div class="_box box5">
       <air-visibility />
     </div>
-    <div class="box box6">
+    <div class="_box box6">
       <wind-status />
     </div>
   </div>
@@ -67,7 +67,20 @@ export default {
   grid-column: 2/5;
 }
 
-.box:not(:last-child) {
+._box {
+  border: 1px solid #e6e6e6;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+._box:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+._box:not(:last-child) {
   margin: 0;
 }
 
