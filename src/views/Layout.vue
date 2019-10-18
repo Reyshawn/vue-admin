@@ -1,6 +1,6 @@
 <template>
   <div class="container" :class="{collapse: closed}">
-    <sidebar :closed.sync="closed" />
+    <sidebar :closed="closed" />
     <div class="main-content">
       <NavBar>
         <div class="nav-item sidebar-toggle" @click="closeSidebar">
@@ -37,6 +37,7 @@ export default {
   methods: {
     closeSidebar () {
       this.closed = !this.closed
+      this.$store.commit('app/SET_SIDEBAR', this.closed)
       if (this.closed) {
         this.$store.commit('RESET_SUBMENU')
       }

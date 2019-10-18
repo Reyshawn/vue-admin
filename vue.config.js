@@ -13,6 +13,11 @@ module.exports = {
         target: 'http://www.mapquestapi.com/geocoding/v1/',
         changeOrigin: true,
         pathRewrite: { '^/geocoding': '' }
+      },
+      '/unsplash': {
+        target: 'https://api.unsplash.com/',
+        changeOrigin: true,
+        pathRewrite: { '^/unsplash': '' }
       }
     }
   }

@@ -7,4 +7,5 @@ export default (axios) => {
   mock.onGet(/\/geocoding\/[^ ]+/).passThrough()
   mock.onPost(/\/auth\/[^ ]+/).passThrough()
   mock.onGet(/\/auth\/[^ ]+/).passThrough()
+  mock.onGet(/\/unsplash\/[^ ]+/).passThrough()
 }
