@@ -9,9 +9,40 @@
       </div>
     </div>
     <div class="search-result grid">
+      <div><p>{{scroll}}</p></div>
       <div class="grid-sizer"></div>
       <div v-for="image in images" :key="image.id" class="grid-item">
-        <img :src="image.urls.small"  alt="">
+        <img :src="image.urls.small"  :alt="image.alt_description" @click="toggelImage($event, image)">
+      </div>
+    </div>
+    <div
+      class="img-details-wrapper"
+      :class="{'show-img':showImage}"
+      @click="toggelImage($event, image)"
+    >
+      <div class="img-wrapper">
+        <img src="" alt="">
+      </div>
+      <div class="img-details" v-if="showImage">
+        <div class="img-details-size">
+          <p>Width: <span>{{image.width}}px</span></p>
+          <p>Height: <span>{{image.height}}px</span> </p>
+        </div>
+        <div class="img-details-tags">
+          <span class="img-detail-tag" v-for="tag in image.tags" :key="tag.title">
+            #{{tag.title}}
+          </span>
+        </div>
+        <div class="img-details-author">
+          <p><i class="fas fa-user-circle"></i> <a :href="image.user.links.html"> {{image.user.name}}</a></p>
+          <p v-if="image.user.instagram_username"><i class="fab fa-instagram"></i> @{{image.user.instagram_username}} </p>
+          <p v-if="image.user.twitter_username"><i class="fab fa-twitter-square"></i> @{{image.user.twitter_username}} </p>
+        </div>
+        <div class="img-details-download">
+          <a :href="image.links.download">
+            <i class="far fa-arrow-alt-circle-down"></i> Download This!
+          </a>
+        </div>
       </div>
     </div>
     <div class="scrollTop" @click="scrollTop" :class="{'hide': !scrolled}">
@@ -62,8 +93,11 @@ export default {
       q: '',
       page: null,
       images: [],
+      scroll: 0,
       scrolled: false,
       loading: false,
+      showImage: false,
+      image: null,
 
       msnry: null,
 
@@ -77,13 +111,13 @@ export default {
   },
   methods: {
     async handleScroll (e) {
-      this.scroll = window.pageYOffset // window.scrollY or document.documentElement.scrollTop
-      if (window.scrollY > 600) {
+      this.scroll = document.body.scrollTop // window.scrollY or document.documentElement.scrollTop
+      if (this.scroll > 600) {
         this.scrolled = true
       } else {
         this.scrolled = false
       }
-      if (!this.loading && window.innerHeight + window.scrollY >= document.body.scrollHeight) {
+      if (!this.loading && window.innerHeight + this.scroll >= document.body.scrollHeight) {
         this.loading = true
         console.log('this is bottom')
         this.page++
@@ -109,8 +143,23 @@ export default {
         to: 0,
         duration: 500
       }, value => {
-        window.scrollTo(0, value)
+        document.body.scrollTo(0, value)
       })
+    },
+
+    toggelImage (e, image) {
+      e.stopPropagation()
+      this.showImage = !this.showImage
+      let img = document.querySelector('.img-details-wrapper img')
+      console.log(image)
+      if (this.showImage) {
+        this.image = image
+        img.src = image.urls.regular
+        document.body.style.overflow = 'hidden'
+      } else {
+        img.src = ''
+        document.body.style.overflow = 'scroll'
+      }
     }
   },
   watch: {
@@ -135,16 +184,18 @@ export default {
     }
   },
   mounted () {
+    document.body.style.overflow = 'scroll'
     let elem = document.querySelector('.grid')
     this.msnry = new Masonry(elem, {
       // options
       itemSelector: '.grid-item',
       columnWidth: '.grid-sizer'
     })
-    window.addEventListener('scroll', this.handleScroll)
+    document.body.addEventListener('scroll', this.handleScroll)
   },
   destroyed () {
-    window.removeEventListener('scroll', this.handleScroll)
+    document.body.style.removeProperty('overflow')
+    document.body.removeEventListener('scroll', this.handleScroll)
   }
 
 }
@@ -317,6 +368,66 @@ button:hover {
   height: 100%;
   height: 388px; /* the height of bigger search-header minus the height of scrolled seach-header */
 }
+
+.img-details-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.8);
+  transform: translateY(100%);
+  transition: transform .3s linear;
+
+  z-index: 1000;
+
+  display: grid;
+  grid-template-columns: 66.6% 1fr;
+}
+
+.img-details-wrapper .img-wrapper {
+  grid-column: 1 / 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  padding: 10px;
+}
+
+.img-details-wrapper img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.show-img {
+  transform: translateY(0);
+}
+
+.img-details-wrapper .img-details {
+  /* border-left: 1px solid #fff1c1; */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  font-size: 1.2em;
+  padding-left: 10px;
+}
+.img-details-wrapper a {
+  color: #fff;
+}
+
+.img-details-wrapper a:hover {
+  border-bottom: 1px solid #fff;
+}
+
+.img-details-wrapper .img-details-tags {
+  margin: 10px 0;
+  font-size: .8em;
+  font-weight: bold;
+  font-style: italic;
+}
+
 
 /* loader animation */
 
