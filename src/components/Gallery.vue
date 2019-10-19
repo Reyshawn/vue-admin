@@ -9,7 +9,6 @@
       </div>
     </div>
     <div class="search-result grid">
-      <div><p>{{scroll}}</p></div>
       <div class="grid-sizer"></div>
       <div v-for="image in images" :key="image.id" class="grid-item">
         <img :src="image.urls.small"  :alt="image.alt_description" @click="toggelImage($event, image)">
@@ -51,6 +50,7 @@
     <div class="loading-container" v-if="loading">
       <div class="_loader">Loading ... </div>
     </div>
+    <div class="search-result-end" v-if="page===totalPages">There is no result! 🎉</div>
   </div>
 </template>
 
@@ -91,7 +91,8 @@ export default {
   data () {
     return {
       q: '',
-      page: null,
+      page: -1,
+      totalPages: -2,
       images: [],
       scroll: 0,
       scrolled: false,
@@ -99,9 +100,7 @@ export default {
       showImage: false,
       image: null,
 
-      msnry: null,
-
-      scroll: 0
+      msnry: null
     }
   },
   computed: {
@@ -117,7 +116,7 @@ export default {
       } else {
         this.scrolled = false
       }
-      if (!this.loading && window.innerHeight + this.scroll >= document.body.scrollHeight) {
+      if (!this.loading && window.innerHeight + this.scroll >= document.body.scrollHeight && this.page < this.totalPages) {
         this.loading = true
         console.log('this is bottom')
         this.page++
@@ -135,6 +134,7 @@ export default {
       let res = await getImages(this.q, this.page)
       this.loading = false
       this.images = res.data.results
+      this.totalPages = res.data.total_pages
     },
     scrollTop () {
       let currentScroll = document.documentElement.scrollTop || document.body.scrollTop
@@ -151,7 +151,6 @@ export default {
       e.stopPropagation()
       this.showImage = !this.showImage
       let img = document.querySelector('.img-details-wrapper img')
-      console.log(image)
       if (this.showImage) {
         this.image = image
         img.src = image.urls.regular
@@ -428,7 +427,6 @@ button:hover {
   font-style: italic;
 }
 
-
 /* loader animation */
 
 ._loader {
@@ -467,6 +465,15 @@ button:hover {
   bottom: 0;
   right: 0;
 }
+
+.search-result-end {
+  color: #1a213d;
+  font-size: 2em;
+  font-style: italic;
+  font-weight: bold;
+  margin: 100px auto;
+}
+
 @-webkit-keyframes load3 {
   0% {
     -webkit-transform: rotate(0deg);
