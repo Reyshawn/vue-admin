@@ -376,7 +376,7 @@ button:hover {
   height: 100vh;
   background-color: rgba(0,0,0,0.8);
   transform: translateY(100%);
-  transition: transform .3s linear;
+  transition: transform .3s ease-in-out;
 
   z-index: 1000;
 
