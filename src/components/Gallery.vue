@@ -5,7 +5,7 @@
       <h1>Gallery</h1>
       <div class="search-box">
         <button @click.prevent='search'><i class="fas fa-search"></i></button>
-        <input type="text" v-model='q'>
+        <input type="text" v-model='q' placeholder="Search...">
       </div>
     </div>
     <div class="search-result grid">
