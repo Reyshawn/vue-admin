@@ -50,7 +50,7 @@
     <div class="loading-container" v-if="loading">
       <div class="_loader">Loading ... </div>
     </div>
-    <div class="search-result-end" v-if="page===totalPages">There is no result! 🎉</div>
+    <div class="search-result-end" v-if="page===totalPages || totalPages === 0">There is no result! 🎉</div>
   </div>
 </template>
 

@@ -112,11 +112,11 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: '/backToTop',
-        name: 'BackToTop',
-        component: () => import('@/components/BackToTop'),
+        path: '/table',
+        name: 'Table',
+        component: () => import('@/components/Table'),
         meta: {
-          icon: 'fas fa-chevron-up',
+          icon: 'fas fa-th',
           roles: ['visitor']
         }
       }

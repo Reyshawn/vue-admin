@@ -148,6 +148,8 @@
 </template>
 
 <script>
+import { bufferUrl } from '@/utils'
+
 export default {
   name: 'visitor',
   data () {
@@ -198,11 +200,7 @@ export default {
     this.introduction = res.introduction
     this.avatar = res.avatar
 
-    let arrayBuffer = this.avatar.data.data
-    let bytes = new Uint8Array(arrayBuffer)
-    let blob = new Blob([bytes], { type: 'image/png' })
-    let urlCreator = window.URL || window.webkitURL
-    let imageUrl = urlCreator.createObjectURL(blob)
+    let imageUrl = bufferUrl(this.avatar.data.data)
     this.src = imageUrl
   },
   methods: {

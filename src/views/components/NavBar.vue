@@ -40,6 +40,7 @@
 
 <script>
 import Breadcrumb from '@/components/Breadcrumb'
+import { bufferUrl } from '@/utils'
 
 export default {
   name: 'NavBar',
@@ -55,11 +56,7 @@ export default {
   },
   async mounted () {
     const res = await this.$store.dispatch('user/getInfo')
-    let arrayBuffer = res.avatar.data.data
-    let bytes = new Uint8Array(arrayBuffer)
-    let blob = new Blob([bytes], { type: 'image/png' })
-    let urlCreator = window.URL || window.webkitURL
-    let imageUrl = urlCreator.createObjectURL(blob)
+    let imageUrl = bufferUrl(res.avatar.data.data)
     this.src = imageUrl
   },
   methods: {
